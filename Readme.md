@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Игорь Андреев](https://up.htmlacademy.ru/javascript/13/user/76924).
-* Наставник: `Неизвестно`.
+* Наставник: `Роман Мисюрин`.
 
 ---
 
