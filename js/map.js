@@ -14,15 +14,18 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 } // Генерация случайного числа от min до max
 
-// var randomAvatarUrls = [];
+var usersQuantityArray = [];
 
-function getRandomAvatarUrl(min, max) {
-  var n = Math.floor(Math.random() * (max - min)) + min; // берем случайное число из диапозона
-  var nN = '0' + n; // Преобразуем в число с ведущим нулём
-  // Проверяем, использовалось ли это число ранее
-  var NnN = 'img/avatars/user' + nN + '.png'; // Составляем строку
-  return NnN;
+function getUsersQuantityArray() {
+
+  for (var i = 1; i <= ADS; i++) {
+    var avatarString = 'img/avatars/user0' + i + '.png';
+    usersQuantityArray.push(avatarString);
+
+  }
+  return usersQuantityArray;
 }
+
 // function getLocationString() {
 //   var xString = String(similarAds[i].location.x);
 //   var yString = String(similarAds[i].location.y);
@@ -34,7 +37,7 @@ var similarAds = [];
 for (var i = 1; i <= ADS; i++) {
   similarAds[i] = {
     author: {
-      avatar: getRandomAvatarUrl(1, ADS)
+      avatar: getUsersQuantityArray()[i]
     },
     location: {
       x: getRandomInt(300, 900),
@@ -59,45 +62,46 @@ for (var i = 1; i <= ADS; i++) {
 }
 
 
-// Шаг 2
-var map = document.querySelector('.map');
-map.classList.remove('map--faded');
+// // Шаг 2
+// var map = document.querySelector('.map');
+// map.classList.remove('map--faded');
 
-// Дополнительно
-var similarListElement = userDialog.querySelector('.setup-similar-list');
+// // Дополнительно
+// var similarListElement = userDialog.querySelector('.setup-similar-list');
 
-var similarAdTemplate = document.querySelector('#similar-wizard-template')
-    .content
-    .querySelector('.setup-similar-item');
-// Шаг 3: На основе данных, созданных в первом пункте, создайте DOM-элементы, соответствующие меткам на карте, и заполните их данными из массива
-// Итоговую разметку метки .map__pin можно взять из шаблона .map__card.
-function renderAd(Ad) {
-  var adElement = similarAdTemplate.cloneNode(true);
+// var similarAdTemplate = document.querySelector('#similar-ad-template')
+//     .content
+//     .querySelector('.setup-similar-item');
 
-  adElement.querySelector('.setup-similar-label').textContent = wizard.name;
+// // Шаг 3: На основе данных, созданных в первом пункте, создайте DOM-элементы, соответствующие меткам на карте, и заполните их данными из массива
+// // Итоговую разметку метки .map__pin можно взять из шаблона .map__card.
+// function renderAd(Ad) {
+//   var adElement = similarAdTemplate.cloneNode(true);
 
-  adElement.querySelector('.setup-similar-label').textContent = wizard.name;
-  adElement.querySelector('.setup-similar-label').textContent = wizard.name;
+//   adElement.querySelector('.setup-similar-label').textContent = wizard.name;
 
-  adElement.querySelector('.setup-similar-label').textContent = wizard.name;
-  adElement.querySelector('.setup-similar-label').textContent = wizard.name;
-  adElement.querySelector('.setup-similar-label').textContent = wizard.name;
-  adElement.querySelector('.setup-similar-label').textContent = wizard.name;
-  adElement.querySelector('.setup-similar-label').textContent = wizard.name;
-  adElement.querySelector('.setup-similar-label').textContent = wizard.name;
+//   adElement.querySelector('.setup-similar-label').textContent = wizard.name;
+//   adElement.querySelector('.setup-similar-label').textContent = wizard.name;
 
-  adElement.querySelector('.wizard-coat').style.fill = wizard.coatColor;
-  adElement.querySelector('.wizard-eyes').style.fill = wizard.eyesColor;
+//   adElement.querySelector('.setup-similar-label').textContent = wizard.name;
+//   adElement.querySelector('.setup-similar-label').textContent = wizard.name;
+//   adElement.querySelector('.setup-similar-label').textContent = wizard.name;
+//   adElement.querySelector('.setup-similar-label').textContent = wizard.name;
+//   adElement.querySelector('.setup-similar-label').textContent = wizard.name;
+//   adElement.querySelector('.setup-similar-label').textContent = wizard.name;
 
-  return wizardElement;
-}
+//   adElement.querySelector('.wizard-coat').style.fill = wizard.coatColor;
+//   adElement.querySelector('.wizard-eyes').style.fill = wizard.eyesColor;
 
-// Шаг 4: Отрисуйте сгенерированные DOM-элементы в блок .map__pins. Для вставки элементов используйте DocumentFragment.
+//   return wizardElement;
+// }
 
-var fragment = document.createDocumentFragment();
-for (var i = 0; i < similarAds.length; i++) {
-  fragment.appendChild(renderAd(similarAds[i]));
-}
-similarListElement.appendChild(fragment);
+// // Шаг 4: Отрисуйте сгенерированные DOM-элементы в блок .map__pins. Для вставки элементов используйте DocumentFragment.
 
-userDialog.querySelector('.setup-similar').classList.remove('hidden');
+// var fragment = document.createDocumentFragment();
+// for (var i = 0; i < similarAds.length; i++) {
+//   fragment.appendChild(renderAd(similarAds[i]));
+// }
+// similarListElement.appendChild(fragment);
+
+// userDialog.querySelector('.setup-similar').classList.remove('hidden');
