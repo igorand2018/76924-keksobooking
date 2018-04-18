@@ -4,6 +4,8 @@ var ADS = 8;
 var OFFER_TITLES = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
 var OFFER_TYPES = ['palace', 'flat', 'house', 'bungalo'];
 var OFFER_CHECK = ['12:00', '13:00', '14:00'];
+var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
+var FEATURES = ['wifi','dishwasher','parking','washer','elevator','conditioner'];
 
 function getRandomArrayElement(array) {
   var randomElement = array[Math.floor(Math.random() * array.length)];
@@ -14,54 +16,52 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 } // Генерация случайного числа от min до max
 
-var usersQuantityArray = [];
+// функция вырезающая из массива и пушащая выырезанный элемент
+function getCuttedArrayElement(){
 
-function getUsersQuantityArray() {
-
-  for (var i = 1; i <= ADS; i++) {
-    var avatarString = 'img/avatars/user0' + i + '.png';
-    usersQuantityArray.push(avatarString);
+  for (var i = 0; i<OFFER_TITLES.length; i++){
+    var CuttedElement = OFFER_TITLES.splice(getRandomInt(0, OFFER_TITLES.length-2),1);
+    return CuttedElement;
 
   }
-  return usersQuantityArray;
-}
 
-// function getLocationString() {
-//   var xString = String(similarAds[i].location.x);
-//   var yString = String(similarAds[i].location.y);
-//   return xString + ', ' + yString;
-// };
+} // конец функции вырезальщика
 
 var similarAds = [];
 
-for (var i = 1; i <= ADS; i++) {
-  similarAds[i] = {
+for (var i = 0; i <= ADS-1; i++) {
+  var currentElement = {
     author: {
-      avatar: getUsersQuantityArray()[i]
+      avatar: 'img/avatars/user0' + (i+1) + '.png'
     },
     location: {
       x: getRandomInt(300, 900),
       y: getRandomInt(150, 500),
     },
     offer: {
-      title: getRandomArrayElement(OFFER_TITLES),
-      address: 'similarAds[i].location.x',
+      title: getCuttedArrayElement(),
+      address: '',
       price: getRandomInt(1000, 1000000),
       type: getRandomArrayElement(OFFER_TYPES),
       rooms: getRandomInt(1, 5),
-      guests: getRandomInt(1, 10),
+      guests: getRandomInt(0, 3),
       checkin: getRandomArrayElement(OFFER_CHECK),
       checkout: getRandomArrayElement(OFFER_CHECK),
-      features: 'массив строк случайной длины',
+      features: FEATURES.splice(getRandomInt(1, FEATURES.length-1), getRandomInt(0, FEATURES.length)),
       description: ' ',
-      photos: 'string',
+      photos: PHOTOS.sort(() => Math.random() * 2 - 1),
     }
 
   };
-  similarAds.push(similarAds[i]);
+  currentElement.offer.address = currentElement.location.x + ', ' + currentElement.location.y;
+  similarAds.push(currentElement);
+
 }
 
+console.log(similarAds);
 
+// console.log(similarAds[1].location.y);
+console
 // // Шаг 2
 // var map = document.querySelector('.map');
 // map.classList.remove('map--faded');
