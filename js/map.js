@@ -5,7 +5,7 @@ var OFFER_TITLES = ['Большая уютная квартира', 'Мален�
 var OFFER_TYPES = ['palace', 'flat', 'house', 'bungalo'];
 var OFFER_CHECK = ['12:00', '13:00', '14:00'];
 var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
-var FEATURES = ['wifi','dishwasher','parking','washer','elevator','conditioner'];
+var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 
 function getRandomArrayElement(array) {
   var randomElement = array[Math.floor(Math.random() * array.length)];
@@ -16,29 +16,29 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 } // Генерация случайного числа от min до max
 
-function shuffle(array) {
-  var currentIndex = array.length, temporaryValue, randomIndex;
+// function shuffle(array) {
+//   var currentIndex = array.length, temporaryValue, randomIndex;
 
-  // While there remain elements to shuffle...
-  while (0 !== currentIndex) {
+//   // While there remain elements to shuffle...
+//   while (0 !== currentIndex) {
 
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
+//     // Pick a remaining element...
+//     randomIndex = Math.floor(Math.random() * currentIndex);
+//     currentIndex -= 1;
 
-    // And swap it with the current element.
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
+//     // And swap it with the current element.
+//     temporaryValue = array[currentIndex];
+//     array[currentIndex] = array[randomIndex];
+//     array[randomIndex] = temporaryValue;
+//   }
 
-  return array;
-}
+//   return array;
+// }
 
-function getCuttedArrayElement(){
+function getCuttedArrayElement() {
 
-  for (var i = 0; i<OFFER_TITLES.length; i++){
-    var CuttedElement = OFFER_TITLES.splice(getRandomInt(0, OFFER_TITLES.length-2),1);
+  for (var i = 0; i < OFFER_TITLES.length; i++) {
+    var CuttedElement = OFFER_TITLES.splice(getRandomInt(0, OFFER_TITLES.length-2), 1);
     CuttedElement = String(CuttedElement);
     return CuttedElement;
 
@@ -46,9 +46,13 @@ function getCuttedArrayElement(){
 
 }
 
+function compareRand() {
+  return Math.random() * 2 - 1;
+}// for sort
+
 var similarAds = [];
 
-for (var i = 0; i <= ADS-1; i++) {
+for (var i = 0; i <= ADS - 1; i++) {
   var currentElement = {
     author: {
       avatar: 'img/avatars/user0' + (i+1) + '.png'
@@ -68,7 +72,7 @@ for (var i = 0; i <= ADS-1; i++) {
       checkout: getRandomArrayElement(OFFER_CHECK),
       features: FEATURES.splice(getRandomInt(1, FEATURES.length-1), getRandomInt(0, FEATURES.length)),
       description: ' ',
-      photos: PHOTOS.sort(() => Math.random() * 2 - 1),
+      photos: PHOTOS.sort(compareRand),
     }
 
   };
@@ -76,46 +80,26 @@ for (var i = 0; i <= ADS-1; i++) {
   similarAds.push(currentElement);
 
 }
-
+// PHOTOS.sort(() => Math.random() * 2 - 1)
 // Шаг 2
 var map = document.querySelector('.map');
 map.classList.remove('map--faded');
 
 // Создаём пин
 function createPin() {
-  var Pin = document.createElement('button');
-  var PinPic = document.createElement('img');
-  Pin.classList.add('map__pin');
-  Pin.style = 'left: 200px; top: 200px';
-  PinPic.src = 'img/avatars/user02.png';
-  PinPic.alt = 'Некрасивый негостеприимный домик';
-  Pin.appendChild(PinPic);
-  map.appendChild(Pin);
+  for (var i = 0; i <= ADS-1; i++) {
+    var Pin = document.createElement('button');
+    var PinPic = document.createElement('img');
+    Pin.classList.add('map__pin');
+    Pin.style.top = similarAds[i].location.x + 'px';
+    Pin.style.left = similarAds[i].location.y + 'px';
+    PinPic.src = similarAds[i].author.avatar;
+    PinPic.alt = 'Некрасивый негостеприимный домик';
+    Pin.appendChild(PinPic);
+    map.appendChild(Pin);
+  }
 
-  return Pin;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // // Создадим элемент и добавим его в DOM-дерево:
@@ -125,7 +109,6 @@ function createPin() {
 // newBlock.textContent = '777'; // Добавили текстовое содержимое в новый блок(можно читать свойство, записывать, перезаписывать)
 
 // var AdPin = document.querySelector('.map__pin'); // Создали переменную - записали в нее элемент
-
 
 
 // function renderPin(Pin){
