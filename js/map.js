@@ -16,16 +16,35 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 } // Генерация случайного числа от min до max
 
-// функция вырезающая из массива и пушащая выырезанный элемент
+function shuffle(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+
 function getCuttedArrayElement(){
 
   for (var i = 0; i<OFFER_TITLES.length; i++){
     var CuttedElement = OFFER_TITLES.splice(getRandomInt(0, OFFER_TITLES.length-2),1);
+    CuttedElement = String(CuttedElement);
     return CuttedElement;
 
   }
 
-} // конец функции вырезальщика
+}
 
 var similarAds = [];
 
@@ -58,13 +77,68 @@ for (var i = 0; i <= ADS-1; i++) {
 
 }
 
-console.log(similarAds);
+// Шаг 2
+var map = document.querySelector('.map');
+map.classList.remove('map--faded');
 
-// console.log(similarAds[1].location.y);
-console
-// // Шаг 2
-// var map = document.querySelector('.map');
-// map.classList.remove('map--faded');
+// Создаём пин
+function createPin() {
+  var Pin = document.createElement('button');
+  var PinPic = document.createElement('img');
+  Pin.classList.add('map__pin');
+  Pin.style = 'left: 200px; top: 200px';
+  PinPic.src = 'img/avatars/user02.png';
+  PinPic.alt = 'Некрасивый негостеприимный домик';
+  Pin.appendChild(PinPic);
+  map.appendChild(Pin);
+
+  return Pin;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// // Создадим элемент и добавим его в DOM-дерево:
+// var newBlock = document.createElement('div'); //Элемент создан
+// newBlock.classList.add('container','container-7','red', 'border-radiused'); // Элементу присвоено несколько классов
+// flexContainer.appendChild(newBlock); // Добавили элемент в конец родительского элемента
+// newBlock.textContent = '777'; // Добавили текстовое содержимое в новый блок(можно читать свойство, записывать, перезаписывать)
+
+// var AdPin = document.querySelector('.map__pin'); // Создали переменную - записали в нее элемент
+
+
+
+// function renderPin(Pin){
+//   var adElement = similarAdTemplate.cloneNode(true);
+
+// }
+// var Pin = document.querySelector('.map__pin');
+// function getPin() {
+//   var newPin = Pin.cloneNode(true);
+//   newPin.querySelector('.map__pin').style= 'left:150 px; top: 200px';
+//   map.appendChild(newPin);
+
+// }
 
 // // Дополнительно
 // var similarListElement = userDialog.querySelector('.setup-similar-list');
@@ -73,8 +147,8 @@ console
 //     .content
 //     .querySelector('.setup-similar-item');
 
-// // Шаг 3: На основе данных, созданных в первом пункте, создайте DOM-элементы, соответствующие меткам на карте, и заполните их данными из массива
-// // Итоговую разметку метки .map__pin можно взять из шаблона .map__card.
+// Шаг 3: На основе данных, созданных в первом пункте, создайте DOM-элементы, соответствующие меткам на карте, и заполните их данными из массива
+// Итоговую разметку метки .map__pin можно взять из шаблона .map__card.
 // function renderAd(Ad) {
 //   var adElement = similarAdTemplate.cloneNode(true);
 
