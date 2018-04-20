@@ -93,16 +93,27 @@ var mapPins = document.querySelector('.map__pins');// Контейнер
 // Создаём пин
 function renderPin() {
   var newPin = mapPin.cloneNode(true);
-  newPin.style.top = currentElement.location.x - PIN_HEIGTH + 'px';
-  newPin.style.left = currentElement.location.y - (PIN_WINDTH / 2) + 'px';
-  newPin.querySelector('img').src = currentElement.author.avatar;
-  newPin.querySelector('img').alt = currentElement.offer.title;
+  newPin.style.top = similarAds[i].location.x - PIN_HEIGTH + 'px';
+  newPin.style.left = similarAds[i].location.y - (PIN_WINDTH / 2) + 'px';
+  newPin.querySelector('img').src = similarAds[i].author.avatar;
+  newPin.querySelector('img').alt = similarAds[i].offer.title;
   return newPin;
 }
 // Создаём фрагмент
 var fragment = document.createDocumentFragment();
-for(i = 0; i <= ADS - 1; i++) {
+for (i = 0; i <= ADS - 1; i++) {
   fragment.appendChild(renderPin());
 }
 
 mapPins.appendChild(fragment);
+
+// Создаём карточку первого элемента
+var mapCard = document.querySelector('template');
+
+function renderCard() {
+  var newCard = mapCard.cloneNode(true);
+  newCard.querySelector('.popup__title').textContent = similarAds[0].offer.title;
+  return newCard;
+}
+
+// renderCard();
