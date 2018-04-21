@@ -108,18 +108,57 @@ var featuresFragment = document.createDocumentFragment();
 // featuresList.appendChild(featuresFragment);
 
 // function getOfferPhotos() {
-//   var offerPhoto = document.createElement('img');
-//   offerPhoto.classList.add('popup__photo');
-//   offerPhoto.style.width = 45;
-//   offerPhoto.style.heigth = 40;
 
-//   for (i=0;i<=similarAds[0].offer.photos.length;i++) {
+
+//   for (i=0; i<=similarAds[0].offer.photos.length; i++) {
+//     var offerPhoto = document.createElement('img');
+//     offerPhoto.classList.add('popup__photo');
+//     offerPhoto.style.width = 45;
+//     offerPhoto.style.heigth = 40;
 //     offerPhoto.src = similarAds[0].offer.photos[i];
 //   }
 
 //   return offerPhoto;
 // }
 
+var photos = [];
+// function getOfferPhotos() {
+//   for (i = 0; i <= 2; i++) {
+//     photos[i]={
+
+//     }
+//     var offerPhoto = document.createElement('img');
+//     offerPhoto.classList.add('popup__photo');
+//     offerPhoto.style.width = 45;
+//     offerPhoto.style.heigth = 40;
+//     offerPhoto.src = similarAds[0].offer.photos[i];
+//     // photosList.appendChild(offerPhoto);
+//     photos[i] = offerPhoto;
+//   }
+//   return photos;
+// }
+// var similarPhoto = document.querySelector('.popup__photo');
+
+// function renderPhoto() {
+
+//   var photo = similarPhoto.cloneNode(true);
+//   photo.src = similarAds[0].offer.photos[1];
+//   return photo;
+// }
+// var photoFragment = document.createDocumentFragment();
+// for (i = 0; i <= 2; i++) {
+//   photoFragment.appendChild(renderPhoto());
+// }
+// photosList.appendChild(photoFragment);
+function getofferPhoto() {
+
+  var photo = document.createElement('img');
+  photo.width = 45;
+  photo.height = 40;
+  photo.classList.add('popup__photo');
+  photo.src = similarAds[0].offer.photos[0];
+  return photo;
+}
 
 function renderCard() {
   var newCard = mapCard.cloneNode(true);
@@ -135,7 +174,7 @@ function renderCard() {
 
   newCard.querySelector('.popup__description').textContent = similarAds[0].offer.description;
 
-  // newCard.querySelector('.popup__photos').appendChild(getOfferPhotos()); // Offer photos
+  newCard.querySelector('.popup__photos').appendChild(getofferPhoto()); // Offer photos
 
   newCard.querySelector('.popup__avatar').src = similarAds[0].author.avatar;
   map.insertBefore(newCard, mapFiltersContainer);
