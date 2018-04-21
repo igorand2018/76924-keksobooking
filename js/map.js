@@ -107,11 +107,18 @@ var featuresFragment = document.createDocumentFragment();
 // }
 // featuresList.appendChild(featuresFragment);
 
-function getOfferPhotos() {
-  var offerPhoto = document.createElement('img');
-  offerPhoto.src = similarAds[0].offer.photos[0];
-  return offerPhoto;
-}
+// function getOfferPhotos() {
+//   var offerPhoto = document.createElement('img');
+//   offerPhoto.classList.add('popup__photo');
+//   offerPhoto.style.width = 45;
+//   offerPhoto.style.heigth = 40;
+
+//   for (i=0;i<=similarAds[0].offer.photos.length;i++) {
+//     offerPhoto.src = similarAds[0].offer.photos[i];
+//   }
+
+//   return offerPhoto;
+// }
 
 
 function renderCard() {
@@ -128,7 +135,7 @@ function renderCard() {
 
   newCard.querySelector('.popup__description').textContent = similarAds[0].offer.description;
 
-  // newCard.querySelector('.popup__photos').src = getOfferPhotos(); // Offer photos
+  // newCard.querySelector('.popup__photos').appendChild(getOfferPhotos()); // Offer photos
 
   newCard.querySelector('.popup__avatar').src = similarAds[0].author.avatar;
   map.insertBefore(newCard, mapFiltersContainer);
