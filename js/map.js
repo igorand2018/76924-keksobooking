@@ -90,74 +90,31 @@ var mapCard = document.querySelector('template')
     .querySelector('.map__card');
 var mapFiltersContainer = document.querySelector('.map__filters-container');
 
-var featuresList = document.querySelector('.popup__features');
 var featuresFragment = document.createDocumentFragment();
 
+function getOfferFeatures() {
+  for (i = 0; i < similarAds[0].offer.features.length; i++) {
+    var feature = document.createElement('li');
+    var popupFeatureCustom = 'popup__feature--' + similarAds[0].offer.features[i];
+    feature.classList.add('popup__feature', popupFeatureCustom);
 
-// function getOfferFeatures() {
-//   var popupElement = document.createElement('li');
-//   var popupFeatureCustom = 'popup__feature--' + similarAds[0].offer.features[j];
-//   popupElement.classList.add('popup__feature', popupFeatureCustom);
-//   return popupElement;
-// }
+    featuresFragment.appendChild(feature);
+  }
+  return featuresFragment;
+}
 
-// for (var j = 0; j <= similarAds[0].offer.features.length; j++) {
-//   featuresFragment.appendChild(getPopupFeatures());
+var photoFragment = document.createDocumentFragment();
 
-// }
-// featuresList.appendChild(featuresFragment);
-
-// function getOfferPhotos() {
-
-
-//   for (i=0; i<=similarAds[0].offer.photos.length; i++) {
-//     var offerPhoto = document.createElement('img');
-//     offerPhoto.classList.add('popup__photo');
-//     offerPhoto.style.width = 45;
-//     offerPhoto.style.heigth = 40;
-//     offerPhoto.src = similarAds[0].offer.photos[i];
-//   }
-
-//   return offerPhoto;
-// }
-
-var photos = [];
-// function getOfferPhotos() {
-//   for (i = 0; i <= 2; i++) {
-//     photos[i]={
-
-//     }
-//     var offerPhoto = document.createElement('img');
-//     offerPhoto.classList.add('popup__photo');
-//     offerPhoto.style.width = 45;
-//     offerPhoto.style.heigth = 40;
-//     offerPhoto.src = similarAds[0].offer.photos[i];
-//     // photosList.appendChild(offerPhoto);
-//     photos[i] = offerPhoto;
-//   }
-//   return photos;
-// }
-// var similarPhoto = document.querySelector('.popup__photo');
-
-// function renderPhoto() {
-
-//   var photo = similarPhoto.cloneNode(true);
-//   photo.src = similarAds[0].offer.photos[1];
-//   return photo;
-// }
-// var photoFragment = document.createDocumentFragment();
-// for (i = 0; i <= 2; i++) {
-//   photoFragment.appendChild(renderPhoto());
-// }
-// photosList.appendChild(photoFragment);
-function getofferPhoto() {
-
-  var photo = document.createElement('img');
-  photo.width = 45;
-  photo.height = 40;
-  photo.classList.add('popup__photo');
-  photo.src = similarAds[0].offer.photos[0];
-  return photo;
+function getofferPhotos() {
+  for (i = 0; i < similarAds[0].offer.photos.length; i++) {
+    var photo = document.createElement('img');
+    photo.width = 45;
+    photo.height = 40;
+    photo.classList.add('popup__photo');
+    photo.src = similarAds[0].offer.photos[i];
+    photoFragment.appendChild(photo);
+  }
+  return photoFragment;
 }
 
 function renderCard() {
@@ -170,11 +127,11 @@ function renderCard() {
 
   newCard.querySelector('.popup__text--time').textContent = 'Заезд после ' + similarAds[0].offer.checkin + ', выезд до ' + similarAds[0].offer.checkout;
 
-  // newCard.querySelector('.popup__features').content = (getPopupFeatures()); // offer features
+  newCard.querySelector('.popup__features').appendChild(getOfferFeatures());
 
   newCard.querySelector('.popup__description').textContent = similarAds[0].offer.description;
 
-  newCard.querySelector('.popup__photos').appendChild(getofferPhoto()); // Offer photos
+  newCard.querySelector('.popup__photos').appendChild(getofferPhotos());
 
   newCard.querySelector('.popup__avatar').src = similarAds[0].author.avatar;
   map.insertBefore(newCard, mapFiltersContainer);
