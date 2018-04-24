@@ -62,7 +62,7 @@ for (var i = 0; i < ADS; i++) {
 }
 
 var map = document.querySelector('.map');
-map.classList.remove('map--faded');
+// map.classList.remove('map--faded');
 
 var mapPin = document.querySelector('.map__pin');
 var mapPins = document.querySelector('.map__pins');
@@ -82,7 +82,7 @@ for (i = 0; i < ADS; i++) {
   fragment.appendChild(renderPin());
 }
 
-mapPins.appendChild(fragment);
+// mapPins.appendChild(fragment);
 
 
 var mapCard = document.querySelector('template')
@@ -135,4 +135,4 @@ function renderCard(arrayElement) {
   map.insertBefore(newCard, mapFiltersContainer);
 }
 
-renderCard(similarAds[0]);
+// renderCard(similarAds[0]);
