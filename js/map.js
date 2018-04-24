@@ -82,9 +82,6 @@ for (i = 0; i < ADS; i++) {
   fragment.appendChild(renderPin());
 }
 
-// mapPins.appendChild(fragment);
-
-
 var mapCard = document.querySelector('template')
     .content
     .querySelector('.map__card');
@@ -136,3 +133,28 @@ function renderCard(arrayElement) {
 }
 
 // renderCard(similarAds[0]);
+
+// Module4-Task1
+var adForm = document.querySelector('.ad-form');
+var adFormFieldSet = document.querySelectorAll('.ad-form__element');
+
+for (var sa = 0; sa < adFormFieldSet.length; sa++) {
+  adFormFieldSet[sa].setAttribute('disabled', 'disabled');
+}
+
+var mapPinMain = document.querySelector('.map__pin--main');
+
+function activateApp() {
+  adForm.classList.remove('ad-form--disabled');
+  map.classList.remove('map--faded');
+  for (sa = 0; sa < adFormFieldSet.length; sa++) {
+    adFormFieldSet[sa].removeAttribute('disabled');
+  }
+}
+mapPinMain.addEventListener('mouseup', function () {
+  activateApp();
+  mapPins.appendChild(fragment);
+});
+
+// Создать обработчики событий, которые при нажатии на пины
+// будут показывать соответствующие им карточки
