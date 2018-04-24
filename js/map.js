@@ -62,7 +62,6 @@ for (var i = 0; i < ADS; i++) {
 }
 
 var map = document.querySelector('.map');
-// map.classList.remove('map--faded');
 
 var mapPin = document.querySelector('.map__pin');
 var mapPins = document.querySelector('.map__pins');
@@ -134,7 +133,6 @@ function renderCard(arrayElement) {
 
 // renderCard(similarAds[0]);
 
-// Module4-Task1
 var adForm = document.querySelector('.ad-form');
 var adFormFieldSet = document.querySelectorAll('.ad-form__element');
 
@@ -151,10 +149,38 @@ function activateApp() {
     adFormFieldSet[sa].removeAttribute('disabled');
   }
 }
+// Определение исходного значения поля адреса
+var STARTING_POINT = '570, 322';
+var formAdressInput = document.getElementById('address');
+
+function setAddress() {
+  formAdressInput.value = STARTING_POINT;
+}
+
 mapPinMain.addEventListener('mouseup', function () {
   activateApp();
   mapPins.appendChild(fragment);
+  setAddress();
+
 });
 
-// Создать обработчики событий, которые при нажатии на пины
-// будут показывать соответствующие им карточки
+// Открытие и закрытие mapCard каждого пользователя
+
+// var xfw = mapPins.querySelectorAll('button');
+// mapPin.addEventListener('click', function () {
+//   renderCard(similarAds[4]);
+// });
+
+var popupClose = document.querySelector('.popup__close');
+
+// popupClose.addEventListener('click', function () {
+//   mapCard.display = 'none';
+// });
+
+var mapPinsNumber = mapPins.querySelectorAll('button');
+
+// Сейчас попап появляется, потому что ты нажимаешь на нулевой баттон в контейнере (он тоже маппин мэйн)
+mapPin.addEventListener('click', function () {
+  renderCard(similarAds[1]);
+
+});
