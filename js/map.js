@@ -171,16 +171,14 @@ mapPinMain.addEventListener('mouseup', function () {
 //   renderCard(similarAds[4]);
 // });
 
-var popupClose = document.querySelector('.popup__close');
-
 // popupClose.addEventListener('click', function () {
 //   mapCard.display = 'none';
 // });
-
-var mapPinsNumber = mapPins.querySelectorAll('button');
+var popupClose = document.querySelector('.popup__close');
+var mapPinsNumber = mapPins.getElementsByTagName('button')[4];
 
 // Сейчас попап появляется, потому что ты нажимаешь на нулевой баттон в контейнере (он тоже маппин мэйн)
-mapPin.addEventListener('click', function () {
-  renderCard(similarAds[1]);
+mapPinsNumber.addEventListener('click', function () {
+  renderCard(similarAds[4]);
 
 });
