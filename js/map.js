@@ -131,33 +131,68 @@ function renderCard(arrayElement) {
   newCard.querySelector('.popup__photos').innerHTML = '';
   newCard.querySelector('.popup__photos').appendChild(getofferPhotos());
   newCard.querySelector('.popup__avatar').src = arrayElement.author.avatar;
+
+  // newCard.classList.add('hidden-popup').display = '';
+
   map.insertBefore(newCard, mapFiltersContainer);
 }
 
 var adForm = document.querySelector('.ad-form');
 var adFormFieldSet = document.querySelectorAll('.ad-form__element');
 
-for (var sa = 0; sa < adFormFieldSet.length; sa++) {
-  adFormFieldSet[sa].setAttribute('disabled', 'disabled');
+for (var s = 0; s < adFormFieldSet.length; s++) {
+  adFormFieldSet[s].setAttribute('disabled', 'disabled');
 }
 
 function activateApp() {
   adForm.classList.remove('ad-form--disabled');
   map.classList.remove('map--faded');
-  for (sa = 0; sa < adFormFieldSet.length; sa++) {
-    adFormFieldSet[sa].removeAttribute('disabled');
+  for (s = 0; s < adFormFieldSet.length; s++) {
+    adFormFieldSet[s].removeAttribute('disabled');
   }
 }
 // Определение исходного значения поля адреса
+// var startPoint = '';
+// startPoint.setAttribute('style', 'left: 570px; top: 375px;');
+
 var STARTING_POINT = '570, 322';
 var formAdressInput = document.getElementById('address');
 
 function setAddress() {
   formAdressInput.value = STARTING_POINT;
 }
-// Добавление события по mouseup event
-// var mapPinsNumber = map.querySelectorAll('button'); // Отрефакторить
+
 var startPin = document.querySelector('.map__pins .map__pin');
+
+function onFirstPinClick() {
+  var currentMapCard = renderCard(similarAds[0]);
+  mapCard.querySelector('.popup__close').addEventListener('click', function () {
+    map.removeChild(currentMapCard);
+  });
+
+}
+function onSecondPinClick() {
+  renderCard(similarAds[1]);
+}
+function onThirdPinClick() {
+  renderCard(similarAds[2]);
+}
+
+function onFourthPinClick() {
+  renderCard(similarAds[3]);
+}
+function onFifthPinClick() {
+  renderCard(similarAds[4]);
+}
+function onSixthPinClick() {
+  renderCard(similarAds[5]);
+}
+function onSeventhPinClick() {
+  renderCard(similarAds[6]);
+}
+function onEigthPinClick() {
+  renderCard(similarAds[7]);
+}
 
 startPin.addEventListener('mouseup', function () {
 
@@ -166,19 +201,28 @@ startPin.addEventListener('mouseup', function () {
   setAddress();
 
   var firstPin = document.querySelector('.map__pin--0');
+  var secondPin = document.querySelector('.map__pin--1');
+  var thirdPin = document.querySelector('.map__pin--2');
+  var fourthPin = document.querySelector('.map__pin--3');
+  var fifthPin = document.querySelector('.map__pin--4');
+  var sixthPin = document.querySelector('.map__pin--5');
+  var seventhPin = document.querySelector('.map__pin--6');
+  var eigthPin = document.querySelector('.map__pin--7');
+
   var cardClose = mapCard.querySelector('.popup__close');
 
-  function closeCard() {
-    map.remove(similarAds[0]);
-  }
+  firstPin.addEventListener('click', onFirstPinClick);
 
-  firstPin.addEventListener('click', function () {
-    renderCard(similarAds[0]);
-
-  });
+  secondPin.addEventListener('click', onSecondPinClick);
+  thirdPin.addEventListener('click', onThirdPinClick);
+  fourthPin.addEventListener('click', onFourthPinClick);
+  fifthPin.addEventListener('click', onFifthPinClick);
+  sixthPin.addEventListener('click', onSixthPinClick);
+  seventhPin.addEventListener('click', onSeventhPinClick);
+  eigthPin.addEventListener('click', onEigthPinClick);
 
   cardClose.addEventListener('click', function () {
-    mapCard.classlist.add('.hidden');
+
   });
 
 });
