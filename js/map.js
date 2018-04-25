@@ -73,6 +73,9 @@ function renderPin() {
   newPin.style.left = similarAds[i].location.x - (PIN_WINDTH / 2) + 'px';
   newPin.querySelector('img').src = similarAds[i].author.avatar;
   newPin.querySelector('img').alt = similarAds[i].offer.title;
+  // newPin.dataset.indexNumber = [i];
+  var pinNumberClass = 'map__pin--' + String([i]);
+  newPin.classList.add(pinNumberClass);
   return newPin;
 }
 
@@ -131,16 +134,12 @@ function renderCard(arrayElement) {
   map.insertBefore(newCard, mapFiltersContainer);
 }
 
-// renderCard(similarAds[0]);
-
 var adForm = document.querySelector('.ad-form');
 var adFormFieldSet = document.querySelectorAll('.ad-form__element');
 
 for (var sa = 0; sa < adFormFieldSet.length; sa++) {
   adFormFieldSet[sa].setAttribute('disabled', 'disabled');
 }
-
-var mapPinMain = document.querySelector('.map__pin--main');
 
 function activateApp() {
   adForm.classList.remove('ad-form--disabled');
@@ -156,29 +155,31 @@ var formAdressInput = document.getElementById('address');
 function setAddress() {
   formAdressInput.value = STARTING_POINT;
 }
+// Добавление события по mouseup event
+// var mapPinsNumber = map.querySelectorAll('button'); // Отрефакторить
+var startPin = document.querySelector('.map__pins .map__pin');
 
-mapPinMain.addEventListener('mouseup', function () {
+startPin.addEventListener('mouseup', function () {
+
   activateApp();
   mapPins.appendChild(fragment);
   setAddress();
 
-});
+  var firstPin = document.querySelector('.map__pin--0');
+  var cardClose = mapCard.querySelector('.popup__close');
 
-// Открытие и закрытие mapCard каждого пользователя
+  function closeCard() {
+    map.remove(similarAds[0]);
+  }
 
-// var xfw = mapPins.querySelectorAll('button');
-// mapPin.addEventListener('click', function () {
-//   renderCard(similarAds[4]);
-// });
+  firstPin.addEventListener('click', function () {
+    renderCard(similarAds[0]);
 
-// popupClose.addEventListener('click', function () {
-//   mapCard.display = 'none';
-// });
-var popupClose = document.querySelector('.popup__close');
-var mapPinsNumber = mapPins.getElementsByTagName('button')[4];
+  });
 
-// Сейчас попап появляется, потому что ты нажимаешь на нулевой баттон в контейнере (он тоже маппин мэйн)
-mapPinsNumber.addEventListener('click', function () {
-  renderCard(similarAds[4]);
+  cardClose.addEventListener('click', function () {
+    mapCard.classlist.add('.hidden');
+  });
 
 });
+
