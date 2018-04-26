@@ -67,21 +67,36 @@ var mapPin = document.querySelector('.map__pin');
 var mapPins = document.querySelector('.map__pins');
 
 
-function renderPin() {
-  var newPin = mapPin.cloneNode(true);
-  newPin.style.top = similarAds[i].location.y - PIN_HEIGTH + 'px';
-  newPin.style.left = similarAds[i].location.x - (PIN_WINDTH / 2) + 'px';
-  newPin.querySelector('img').src = similarAds[i].author.avatar;
-  newPin.querySelector('img').alt = similarAds[i].offer.title;
-  newPin.dataset.indexNumber = [i];
-  // var pinNumberClass = 'map__pin--' + String([i]);
-  // newPin.classList.add(pinNumberClass);
-  return newPin;
-}
+// function renderPin() {
+//   var newPin = mapPin.cloneNode(true);
+//   newPin.style.top = similarAds[i].location.y - PIN_HEIGTH + 'px';
+//   newPin.style.left = similarAds[i].location.x - (PIN_WINDTH / 2) + 'px';
+//   newPin.querySelector('img').src = similarAds[i].author.avatar;
+//   newPin.querySelector('img').alt = similarAds[i].offer.title;
+//   newPin.dataset.indexNumber = [i];
+//   // var pinNumberClass = 'map__pin--' + String([i]);
+//   // newPin.classList.add(pinNumberClass);
+//   return newPin;
+// }
 
-var fragment = document.createDocumentFragment();
-for (i = 0; i < ADS; i++) {
-  fragment.appendChild(renderPin());
+// var fragment = document.createDocumentFragment();
+// for (i = 0; i < ADS; i++) {
+//   fragment.appendChild(renderPin());
+// }
+var pinsFragment = document.createDocumentFragment();
+function getPins() {
+  for (i = 0; i < ADS; i++) {
+    var newPin = mapPin.cloneNode(true);
+    newPin.style.top = similarAds[i].location.y - PIN_HEIGTH + 'px';
+    newPin.style.left = similarAds[i].location.x - (PIN_WINDTH / 2) + 'px';
+    newPin.querySelector('img').src = similarAds[i].author.avatar;
+    newPin.querySelector('img').alt = similarAds[i].offer.title;
+    newPin.dataset.indexNumber = [i];
+    pinsFragment.appendChild(newPin);
+
+  }
+  mapPins.appendChild(pinsFragment);
+
 }
 
 var mapCard = document.querySelector('template')
@@ -199,13 +214,15 @@ var startPin = document.querySelector('.map__pins .map__pin');
 startPin.addEventListener('mouseup', function () {
 
   activateApp();
-  mapPins.appendChild(fragment);
   setAddress();
-
+  getPins();
   mapPin.addEventListener('click', function (evt) {
     var target = evt.target;
     console.log(target.getAttribute('data-index'));
   });
+
+  // mapPins.appendChild(fragment);
+
   // var firstPin = document.querySelector('.map__pin--0');
   // var secondPin = document.querySelector('.map__pin--1');
   // var thirdPin = document.querySelector('.map__pin--2');
