@@ -113,6 +113,7 @@ function getofferPhotos() {
   }
   return photoFragment;
 }
+var ESC_KEYCODE = 27;
 
 function renderCard(arrayElement) {
   var newCard = mapCard.cloneNode(true);
@@ -132,6 +133,17 @@ function renderCard(arrayElement) {
   newCard.querySelector('.popup__close').addEventListener('click', function () {
     map.removeChild(newCard);
   });
+  function closePopup() {
+    map.removeChild(newCard);
+    document.removeEventListener('keydown', onPopupEscPress);
+  }
+  function onPopupEscPress(evt) {
+    if (evt.keyCode === ESC_KEYCODE) {
+      closePopup();
+    }
+  }
+
+  document.addEventListener('keydown', onPopupEscPress);
 }
 
 var adForm = document.querySelector('.ad-form');
