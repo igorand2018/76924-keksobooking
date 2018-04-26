@@ -66,23 +66,6 @@ var map = document.querySelector('.map');
 var mapPin = document.querySelector('.map__pin');
 var mapPins = document.querySelector('.map__pins');
 
-
-// function renderPin() {
-//   var newPin = mapPin.cloneNode(true);
-//   newPin.style.top = similarAds[i].location.y - PIN_HEIGTH + 'px';
-//   newPin.style.left = similarAds[i].location.x - (PIN_WINDTH / 2) + 'px';
-//   newPin.querySelector('img').src = similarAds[i].author.avatar;
-//   newPin.querySelector('img').alt = similarAds[i].offer.title;
-//   newPin.dataset.indexNumber = [i];
-//   // var pinNumberClass = 'map__pin--' + String([i]);
-//   // newPin.classList.add(pinNumberClass);
-//   return newPin;
-// }
-
-// var fragment = document.createDocumentFragment();
-// for (i = 0; i < ADS; i++) {
-//   fragment.appendChild(renderPin());
-// }
 var pinsFragment = document.createDocumentFragment();
 function getPins() {
   for (i = 0; i < ADS; i++) {
@@ -96,7 +79,6 @@ function getPins() {
 
   }
   mapPins.appendChild(pinsFragment);
-
 }
 
 var mapCard = document.querySelector('template')
@@ -146,10 +128,10 @@ function renderCard(arrayElement) {
   newCard.querySelector('.popup__photos').innerHTML = '';
   newCard.querySelector('.popup__photos').appendChild(getofferPhotos());
   newCard.querySelector('.popup__avatar').src = arrayElement.author.avatar;
-
-  // newCard.classList.add('hidden-popup').display = '';
-
   map.insertBefore(newCard, mapFiltersContainer);
+  newCard.querySelector('.popup__close').addEventListener('click', function () {
+    map.removeChild(newCard);
+  });
 }
 
 var adForm = document.querySelector('.ad-form');
@@ -179,74 +161,20 @@ function setAddress() {
 
 var startPin = document.querySelector('.map__pins .map__pin');
 
-
-// function onFirstPinClick() {
-//   var currentMapCard = renderCard(similarAds[0]);
-//   mapCard.querySelector('.popup__close').addEventListener('click', function () {
-//     map.removeChild(currentMapCard);
-//   });
-
-// }
-// function onSecondPinClick() {
-//   renderCard(similarAds[1]);
-// }
-// function onThirdPinClick() {
-//   renderCard(similarAds[2]);
-// }
-
-// function onFourthPinClick() {
-//   renderCard(similarAds[3]);
-// }
-// function onFifthPinClick() {
-//   renderCard(similarAds[4]);
-// }
-// function onSixthPinClick() {
-//   renderCard(similarAds[5]);
-// }
-// function onSeventhPinClick() {
-//   renderCard(similarAds[6]);
-// }
-// function onEigthPinClick() {
-//   renderCard(similarAds[7]);
-// }
-
-
 startPin.addEventListener('mouseup', function () {
-
   activateApp();
   setAddress();
   getPins();
-  mapPin.addEventListener('click', function (evt) {
-    var target = evt.target;
-    console.log(target.getAttribute('data-index'));
-  });
-
-  // mapPins.appendChild(fragment);
-
-  // var firstPin = document.querySelector('.map__pin--0');
-  // var secondPin = document.querySelector('.map__pin--1');
-  // var thirdPin = document.querySelector('.map__pin--2');
-  // var fourthPin = document.querySelector('.map__pin--3');
-  // var fifthPin = document.querySelector('.map__pin--4');
-  // var sixthPin = document.querySelector('.map__pin--5');
-  // var seventhPin = document.querySelector('.map__pin--6');
-  // var eigthPin = document.querySelector('.map__pin--7');
-
-  // var cardClose = mapCard.querySelector('.popup__close');
-
-  // firstPin.addEventListener('click', onFirstPinClick);
-
-  // secondPin.addEventListener('click', onSecondPinClick);
-  // thirdPin.addEventListener('click', onThirdPinClick);
-  // fourthPin.addEventListener('click', onFourthPinClick);
-  // fifthPin.addEventListener('click', onFifthPinClick);
-  // sixthPin.addEventListener('click', onSixthPinClick);
-  // seventhPin.addEventListener('click', onSeventhPinClick);
-  // eigthPin.addEventListener('click', onEigthPinClick);
-
-  // cardClose.addEventListener('click', function () {
-
-  // });
-
 });
 
+mapPins.addEventListener('click', function (evt) {
+  var target = evt.target;
+  while (target !== mapPins) {
+    if (target.matches('.map__pin')) {
+      var currentPinIndex = target.getAttribute('data-index-number');
+      renderCard(similarAds[currentPinIndex]);
+      break;
+    }
+    target = target.parentElement;
+  }
+});
