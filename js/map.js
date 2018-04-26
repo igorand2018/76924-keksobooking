@@ -183,7 +183,8 @@ startPin.addEventListener('mouseup', function () {
 });
 
 function removePreviousCard() {
-  map.removeChild(mapCard);
+  var previousCard = document.querySelector('.popup');
+  map.removeChild(previousCard);
 }
 
 mapPins.addEventListener('click', function (evt) {
