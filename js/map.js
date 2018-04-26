@@ -182,11 +182,16 @@ startPin.addEventListener('mouseup', function () {
   getPins();
 });
 
+function removePreviousCard() {
+  map.removeChild(mapCard);
+}
+
 mapPins.addEventListener('click', function (evt) {
   var target = evt.target;
   while (target !== mapPins) {
     if (target.matches('.map__pin')) {
       var currentPinIndex = target.getAttribute('data-index-number');
+      removePreviousCard();
       renderCard(similarAds[currentPinIndex]);
       break;
     }
