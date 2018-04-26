@@ -73,9 +73,9 @@ function renderPin() {
   newPin.style.left = similarAds[i].location.x - (PIN_WINDTH / 2) + 'px';
   newPin.querySelector('img').src = similarAds[i].author.avatar;
   newPin.querySelector('img').alt = similarAds[i].offer.title;
-  // newPin.dataset.indexNumber = [i];
-  var pinNumberClass = 'map__pin--' + String([i]);
-  newPin.classList.add(pinNumberClass);
+  newPin.dataset.indexNumber = [i];
+  // var pinNumberClass = 'map__pin--' + String([i]);
+  // newPin.classList.add(pinNumberClass);
   return newPin;
 }
 
@@ -164,35 +164,37 @@ function setAddress() {
 
 var startPin = document.querySelector('.map__pins .map__pin');
 
-function onFirstPinClick() {
-  var currentMapCard = renderCard(similarAds[0]);
-  mapCard.querySelector('.popup__close').addEventListener('click', function () {
-    map.removeChild(currentMapCard);
-  });
 
-}
-function onSecondPinClick() {
-  renderCard(similarAds[1]);
-}
-function onThirdPinClick() {
-  renderCard(similarAds[2]);
-}
+// function onFirstPinClick() {
+//   var currentMapCard = renderCard(similarAds[0]);
+//   mapCard.querySelector('.popup__close').addEventListener('click', function () {
+//     map.removeChild(currentMapCard);
+//   });
 
-function onFourthPinClick() {
-  renderCard(similarAds[3]);
-}
-function onFifthPinClick() {
-  renderCard(similarAds[4]);
-}
-function onSixthPinClick() {
-  renderCard(similarAds[5]);
-}
-function onSeventhPinClick() {
-  renderCard(similarAds[6]);
-}
-function onEigthPinClick() {
-  renderCard(similarAds[7]);
-}
+// }
+// function onSecondPinClick() {
+//   renderCard(similarAds[1]);
+// }
+// function onThirdPinClick() {
+//   renderCard(similarAds[2]);
+// }
+
+// function onFourthPinClick() {
+//   renderCard(similarAds[3]);
+// }
+// function onFifthPinClick() {
+//   renderCard(similarAds[4]);
+// }
+// function onSixthPinClick() {
+//   renderCard(similarAds[5]);
+// }
+// function onSeventhPinClick() {
+//   renderCard(similarAds[6]);
+// }
+// function onEigthPinClick() {
+//   renderCard(similarAds[7]);
+// }
+
 
 startPin.addEventListener('mouseup', function () {
 
@@ -200,30 +202,34 @@ startPin.addEventListener('mouseup', function () {
   mapPins.appendChild(fragment);
   setAddress();
 
-  var firstPin = document.querySelector('.map__pin--0');
-  var secondPin = document.querySelector('.map__pin--1');
-  var thirdPin = document.querySelector('.map__pin--2');
-  var fourthPin = document.querySelector('.map__pin--3');
-  var fifthPin = document.querySelector('.map__pin--4');
-  var sixthPin = document.querySelector('.map__pin--5');
-  var seventhPin = document.querySelector('.map__pin--6');
-  var eigthPin = document.querySelector('.map__pin--7');
-
-  var cardClose = mapCard.querySelector('.popup__close');
-
-  firstPin.addEventListener('click', onFirstPinClick);
-
-  secondPin.addEventListener('click', onSecondPinClick);
-  thirdPin.addEventListener('click', onThirdPinClick);
-  fourthPin.addEventListener('click', onFourthPinClick);
-  fifthPin.addEventListener('click', onFifthPinClick);
-  sixthPin.addEventListener('click', onSixthPinClick);
-  seventhPin.addEventListener('click', onSeventhPinClick);
-  eigthPin.addEventListener('click', onEigthPinClick);
-
-  cardClose.addEventListener('click', function () {
-
+  mapPin.addEventListener('click', function (evt) {
+    var target = evt.target;
+    alert(target.getAttribute('data-index'));
   });
+  // var firstPin = document.querySelector('.map__pin--0');
+  // var secondPin = document.querySelector('.map__pin--1');
+  // var thirdPin = document.querySelector('.map__pin--2');
+  // var fourthPin = document.querySelector('.map__pin--3');
+  // var fifthPin = document.querySelector('.map__pin--4');
+  // var sixthPin = document.querySelector('.map__pin--5');
+  // var seventhPin = document.querySelector('.map__pin--6');
+  // var eigthPin = document.querySelector('.map__pin--7');
+
+  // var cardClose = mapCard.querySelector('.popup__close');
+
+  // firstPin.addEventListener('click', onFirstPinClick);
+
+  // secondPin.addEventListener('click', onSecondPinClick);
+  // thirdPin.addEventListener('click', onThirdPinClick);
+  // fourthPin.addEventListener('click', onFourthPinClick);
+  // fifthPin.addEventListener('click', onFifthPinClick);
+  // sixthPin.addEventListener('click', onSixthPinClick);
+  // seventhPin.addEventListener('click', onSeventhPinClick);
+  // eigthPin.addEventListener('click', onEigthPinClick);
+
+  // cardClose.addEventListener('click', function () {
+
+  // });
 
 });
 
