@@ -6,7 +6,7 @@ var OFFER_TYPES = ['palace', 'flat', 'house', 'bungalo'];
 var OFFER_CHECK = ['12:00', '13:00', '14:00'];
 var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-var PIN_HEIGTH = 77;
+var PIN_HEIGTH = 87;
 var PIN_WINDTH = 65;
 
 function getRandomArrayElement(array) {
@@ -148,15 +148,18 @@ function activateApp() {
     adFormFieldSet[s].removeAttribute('disabled');
   }
 }
-// Определение исходного значения поля адреса
-// var startPoint = '';
-// startPoint.setAttribute('style', 'left: 570px; top: 375px;');
 
-var STARTING_POINT = '570, 322';
 var formAdressInput = document.getElementById('address');
 
+var startPosition = {
+  location: {
+    x: 570,
+    y: 375
+  }
+};
+
 function setAddress() {
-  formAdressInput.value = STARTING_POINT;
+  formAdressInput.value = (startPosition.location.x) + ', ' + Math.round(startPosition.location.y - (PIN_HEIGTH / 2));
 }
 
 var startPin = document.querySelector('.map__pins .map__pin');
