@@ -19,11 +19,7 @@ function getRandomInt(min, max) {
 }
 
 function getCuttedArrayElement() {
-  for (var i = 0; i < OFFER_TITLES.length; i++) {
-    var CuttedElement = OFFER_TITLES.splice(getRandomInt(0, OFFER_TITLES.length - 2), 1);
-    CuttedElement = String(CuttedElement);
-  }
-  return CuttedElement;
+  return OFFER_TITLES.splice(getRandomInt(0, OFFER_TITLES.length - 2), 1);
 }
 
 function compareRand() {
@@ -184,7 +180,9 @@ startPin.addEventListener('mouseup', function () {
 
 function removePreviousCard() {
   var previousCard = document.querySelector('.popup');
-  map.removeChild(previousCard);
+  if (previousCard) {
+    map.removeChild(previousCard);
+  }
 }
 
 mapPins.addEventListener('click', function (evt) {
