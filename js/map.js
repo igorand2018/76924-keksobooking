@@ -204,7 +204,7 @@ startPin.addEventListener('mouseup', function () {
 
   mapPin.addEventListener('click', function (evt) {
     var target = evt.target;
-    alert(target.getAttribute('data-index'));
+    console.log(target.getAttribute('data-index'));
   });
   // var firstPin = document.querySelector('.map__pin--0');
   // var secondPin = document.querySelector('.map__pin--1');
