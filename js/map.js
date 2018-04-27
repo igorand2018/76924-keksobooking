@@ -207,8 +207,8 @@ var inputPrice = adForm.querySelector('#price');
 var timeinSelection = adForm.querySelector('#timein');
 var timeoutSelection = adForm.querySelector('#timeout');
 
-var roomNumberSelection = adForm.querySelector('#room_number');
-var capacitySelection = adForm.querySelector('#capacity');
+var roomNumberSelect = adForm.querySelector('#room_number');
+var capacitySelect = adForm.querySelector('#capacity');
 
 function markValid(inputName) {
   inputName.style.border = '1px solid green';
@@ -269,7 +269,6 @@ var typeToPrice = {
 
 inputType.addEventListener('change', function (evt) {
   var target = evt.target;
-  var type = target.value;
 
   if (target.value === 'flat') {
     inputPrice.min = typeToPrice.flat;
@@ -290,8 +289,33 @@ inputType.addEventListener('change', function (evt) {
 
 });
 
-var roomsSelect = document.getElementById('room_number');
-
-var roomsToGuests = {
-
-}
+// var roomsSelect = document.getElementById('room_number');
+var capacitySelectOption = capacitySelect.querySelectorAll('option');
+roomNumberSelect.addEventListener('change', function (evt) {
+  var target = evt.target;
+  console.log(target);
+  if (target.value === '1') {
+    capacitySelectOption[0].disabled = true;
+    capacitySelectOption[1].disabled = true;
+    capacitySelectOption[2].disabled = false;
+    capacitySelectOption[3].disabled = true;
+  }
+  if (target.value === '2') {
+    capacitySelectOption[0].disabled = true;
+    capacitySelectOption[1].disabled = false;
+    capacitySelectOption[2].disabled = false;
+    capacitySelectOption[3].disabled = true;
+  }
+  if (target.value === '3') {
+    capacitySelectOption[0].disabled = false;
+    capacitySelectOption[1].disabled = false;
+    capacitySelectOption[2].disabled = false;
+    capacitySelectOption[3].disabled = true;
+  }
+  if (target.value === '100') {
+    capacitySelectOption[0].disabled = true;
+    capacitySelectOption[1].disabled = true;
+    capacitySelectOption[2].disabled = true;
+    capacitySelectOption[3].disabled = true;
+  }
+});
