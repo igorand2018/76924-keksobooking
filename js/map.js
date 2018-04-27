@@ -289,11 +289,9 @@ inputType.addEventListener('change', function (evt) {
 
 });
 
-// var roomsSelect = document.getElementById('room_number');
 var capacitySelectOption = capacitySelect.querySelectorAll('option');
 roomNumberSelect.addEventListener('change', function (evt) {
   var target = evt.target;
-  console.log(target);
   if (target.value === '1') {
     capacitySelectOption[0].disabled = true;
     capacitySelectOption[1].disabled = true;
