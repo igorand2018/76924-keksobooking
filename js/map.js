@@ -199,7 +199,6 @@ mapPins.addEventListener('click', function (evt) {
 });
 
 var inputTitle = adForm.querySelector('#title');
-var inputAddress = adForm.querySelector('#address');
 
 var inputType = adForm.querySelector('#type');
 var inputPrice = adForm.querySelector('#price');
@@ -235,11 +234,11 @@ inputTitle.addEventListener('input', function (evt) {
   if (target.value.length < 2) {
     inputTitle.setCustomValidity('Минимальная длина заголовка — 30 символов');
     markInvalid(inputTitle);
-  }
-  if (target.value.length > 30) {
+  } else if (target.value.length > 30) {
     markValid(inputTitle);
+  } else {
+    inputTitle.setCustomValidity('');
   }
-
 });
 
 inputPrice.addEventListener('invalid', function () {
