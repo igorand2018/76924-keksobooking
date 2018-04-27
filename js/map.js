@@ -6,7 +6,7 @@ var OFFER_TYPES = ['palace', 'flat', 'house', 'bungalo'];
 var OFFER_CHECK = ['12:00', '13:00', '14:00'];
 var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-var PIN_HEIGTH = 77;
+var PIN_HEIGTH = 87;
 var PIN_WINDTH = 65;
 
 function getRandomArrayElement(array) {
@@ -19,11 +19,7 @@ function getRandomInt(min, max) {
 }
 
 function getCuttedArrayElement() {
-  for (var i = 0; i < OFFER_TITLES.length; i++) {
-    var CuttedElement = OFFER_TITLES.splice(getRandomInt(0, OFFER_TITLES.length - 2), 1);
-    CuttedElement = String(CuttedElement);
-  }
-  return CuttedElement;
+  return OFFER_TITLES.splice(getRandomInt(0, OFFER_TITLES.length - 2), 1);
 }
 
 function compareRand() {
@@ -62,28 +58,24 @@ for (var i = 0; i < ADS; i++) {
 }
 
 var map = document.querySelector('.map');
-map.classList.remove('map--faded');
 
 var mapPin = document.querySelector('.map__pin');
 var mapPins = document.querySelector('.map__pins');
 
+var pinsFragment = document.createDocumentFragment();
+function getPins() {
+  for (i = 0; i < ADS; i++) {
+    var newPin = mapPin.cloneNode(true);
+    newPin.style.top = similarAds[i].location.y - PIN_HEIGTH + 'px';
+    newPin.style.left = similarAds[i].location.x - (PIN_WINDTH / 2) + 'px';
+    newPin.querySelector('img').src = similarAds[i].author.avatar;
+    newPin.querySelector('img').alt = similarAds[i].offer.title;
+    newPin.dataset.indexNumber = [i];
+    pinsFragment.appendChild(newPin);
 
-function renderPin() {
-  var newPin = mapPin.cloneNode(true);
-  newPin.style.top = similarAds[i].location.y - PIN_HEIGTH + 'px';
-  newPin.style.left = similarAds[i].location.x - (PIN_WINDTH / 2) + 'px';
-  newPin.querySelector('img').src = similarAds[i].author.avatar;
-  newPin.querySelector('img').alt = similarAds[i].offer.title;
-  return newPin;
+  }
+  mapPins.appendChild(pinsFragment);
 }
-
-var fragment = document.createDocumentFragment();
-for (i = 0; i < ADS; i++) {
-  fragment.appendChild(renderPin());
-}
-
-mapPins.appendChild(fragment);
-
 
 var mapCard = document.querySelector('template')
     .content
@@ -117,6 +109,7 @@ function getofferPhotos() {
   }
   return photoFragment;
 }
+var ESC_KEYCODE = 27;
 
 function renderCard(arrayElement) {
   var newCard = mapCard.cloneNode(true);
@@ -133,6 +126,74 @@ function renderCard(arrayElement) {
   newCard.querySelector('.popup__photos').appendChild(getofferPhotos());
   newCard.querySelector('.popup__avatar').src = arrayElement.author.avatar;
   map.insertBefore(newCard, mapFiltersContainer);
+  newCard.querySelector('.popup__close').addEventListener('click', function () {
+    map.removeChild(newCard);
+  });
+  function closePopup() {
+    map.removeChild(newCard);
+    document.removeEventListener('keydown', onPopupEscPress);
+  }
+  function onPopupEscPress(evt) {
+    if (evt.keyCode === ESC_KEYCODE) {
+      closePopup();
+    }
+  }
+
+  document.addEventListener('keydown', onPopupEscPress);
 }
 
-renderCard(similarAds[0]);
+var adForm = document.querySelector('.ad-form');
+var adFormFieldSet = document.querySelectorAll('.ad-form__element');
+
+for (var s = 0; s < adFormFieldSet.length; s++) {
+  adFormFieldSet[s].setAttribute('disabled', 'disabled');
+}
+
+function activateApp() {
+  adForm.classList.remove('ad-form--disabled');
+  map.classList.remove('map--faded');
+  for (s = 0; s < adFormFieldSet.length; s++) {
+    adFormFieldSet[s].removeAttribute('disabled');
+  }
+}
+
+var formAdressInput = document.getElementById('address');
+
+var startPosition = {
+  location: {
+    x: 570,
+    y: 375
+  }
+};
+
+function setAddress() {
+  formAdressInput.value = (startPosition.location.x) + ', ' + Math.round(startPosition.location.y - (PIN_HEIGTH / 2));
+}
+
+var startPin = document.querySelector('.map__pins .map__pin');
+
+startPin.addEventListener('mouseup', function () {
+  activateApp();
+  setAddress();
+  getPins();
+});
+
+function removePreviousCard() {
+  var previousCard = document.querySelector('.popup');
+  if (previousCard) {
+    map.removeChild(previousCard);
+  }
+}
+
+mapPins.addEventListener('click', function (evt) {
+  var target = evt.target;
+  while (target !== mapPins) {
+    if (target.matches('.map__pin')) {
+      var currentPinIndex = target.getAttribute('data-index-number');
+      removePreviousCard();
+      renderCard(similarAds[currentPinIndex]);
+      break;
+    }
+    target = target.parentElement;
+  }
+});
