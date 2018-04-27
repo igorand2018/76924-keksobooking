@@ -197,3 +197,101 @@ mapPins.addEventListener('click', function (evt) {
     target = target.parentElement;
   }
 });
+
+var inputTitle = adForm.querySelector('#title');
+var inputAddress = adForm.querySelector('#address');
+
+var inputType = adForm.querySelector('#type');
+var inputPrice = adForm.querySelector('#price');
+
+var timeinSelection = adForm.querySelector('#timein');
+var timeoutSelection = adForm.querySelector('#timeout');
+
+var roomNumberSelection = adForm.querySelector('#room_number');
+var capacitySelection = adForm.querySelector('#capacity');
+
+function markValid(inputName) {
+  inputName.style.border = '1px solid green';
+}
+function markInvalid(inputName) {
+  inputName.style.border = '1px solid red';
+}
+
+inputTitle.addEventListener('invalid', function () {
+  if (inputTitle.validity.tooShort) {
+    inputTitle.setCustomValidity('Минимальная длина заголовка — 30 символов');
+    markInvalid(inputTitle);
+  } else if (inputTitle.validity.valueMissing) {
+    inputTitle.setCustomValidity('Обязательное поле');
+    markInvalid(inputTitle);
+  } else {
+    inputPrice.setCustomValidity('');
+  }
+
+});
+
+inputTitle.addEventListener('input', function (evt) {
+  var target = evt.target;
+  if (target.value.length < 2) {
+    inputTitle.setCustomValidity('Минимальная длина заголовка — 30 символов');
+    markInvalid(inputTitle);
+  }
+  if (target.value.length > 30) {
+    markValid(inputTitle);
+  }
+
+});
+
+inputPrice.addEventListener('invalid', function () {
+  if (inputPrice.validity.valueMissing) {
+    inputPrice.setCustomValidity('Обязательное поле');
+    markInvalid(inputPrice);
+  } else {
+    inputPrice.setCustomValidity('');
+  }
+
+});
+
+timeinSelection.addEventListener('change', function () {
+  timeoutSelection.value = timeinSelection.value;
+});
+
+timeoutSelection.addEventListener('change', function () {
+  timeinSelection.value = timeoutSelection.value;
+});
+
+var typeToPrice = {
+  'bungalo': 0,
+  'flat': 1000,
+  'house': 5000,
+  'palace': 10000,
+};
+
+inputType.addEventListener('change', function (evt) {
+  var target = evt.target;
+  var type = target.value;
+
+  if (target.value === 'flat') {
+    inputPrice.min = typeToPrice.flat;
+    inputPrice.placeholder = typeToPrice.flat;
+  }
+  if (target.value === 'house') {
+    inputPrice.min = typeToPrice.house;
+    inputPrice.placeholder = typeToPrice.house;
+  }
+  if (target.value === 'palace') {
+    inputPrice.min = typeToPrice.palace;
+    inputPrice.placeholder = typeToPrice.palace;
+  }
+  if (target.value === 'bungalo') {
+    inputPrice.min = typeToPrice.bungalo;
+    inputPrice.placeholder = typeToPrice.bungalo;
+  }
+
+});
+
+var roomsSelect = document.getElementById('room_number');
+
+var roomsToGuests = {
+
+}
