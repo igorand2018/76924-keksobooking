@@ -320,6 +320,7 @@ typeSelect.addEventListener('change', function (evt) {
 function setCapacity() {
   var rooms = roomNumberSelect.value;
   var places = capacitySelect.value;
+
   if (rooms === '1' && places === '1') {
     markValid(capacitySelect);
     capacitySelect.setCustomValidity('');
@@ -351,7 +352,7 @@ function setCapacity() {
   }
 }
 
-roomNumberSelect.addEventListener('input', function () {
+roomNumberSelect.addEventListener('invalid', function () {
   setCapacity();
 });
 
@@ -363,7 +364,8 @@ function checkFormElementsValidity(Elements) {
   }
 }
 
-submitButton.addEventListener('click', function () {
+submitButton.addEventListener('click', function (evt) {
+  evt.preventDefault();
   checkFormElementsValidity(formInputs);
   checkFormElementsValidity(formSelects);
 
