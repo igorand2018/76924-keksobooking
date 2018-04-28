@@ -200,7 +200,7 @@ mapPins.addEventListener('click', function (evt) {
 
 var inputTitle = adForm.querySelector('#title');
 
-var inputType = adForm.querySelector('#type');
+var typeSelect = adForm.querySelector('#type');
 var inputPrice = adForm.querySelector('#price');
 
 var timeinSelection = adForm.querySelector('#timein');
@@ -209,8 +209,14 @@ var timeoutSelection = adForm.querySelector('#timeout');
 var roomNumberSelect = adForm.querySelector('#room_number');
 var capacitySelect = adForm.querySelector('#capacity');
 
+// var formInputs = adForm.querySelectorAll('input');
+// var formSelects = adForm.querySelectorAll('select');
+
+var submitButton = adForm.querySelector('.ad-form__submit');
+var resetButton = adForm.querySelector('.ad-form__reset');
+
 function markValid(inputName) {
-  inputName.style.border = '1px solid green';
+  inputName.style.border = '1px solid #d9d9d3';
 }
 function markInvalid(inputName) {
   inputName.style.border = '1px solid red';
@@ -225,6 +231,7 @@ inputTitle.addEventListener('invalid', function () {
     markInvalid(inputTitle);
   } else {
     inputPrice.setCustomValidity('');
+    markValid(inputTitle);
   }
 
 });
@@ -235,9 +242,8 @@ inputTitle.addEventListener('input', function (evt) {
     inputTitle.setCustomValidity('Минимальная длина заголовка — 30 символов');
     markInvalid(inputTitle);
   } else if (target.value.length > 30) {
-    markValid(inputTitle);
-  } else {
     inputTitle.setCustomValidity('');
+    markValid(inputTitle);
   }
 });
 
@@ -245,7 +251,10 @@ inputPrice.addEventListener('invalid', function () {
   if (inputPrice.validity.valueMissing) {
     inputPrice.setCustomValidity('Обязательное поле');
     markInvalid(inputPrice);
+  } else if (inputPrice.validity.rangeUnderflow) {
+    markInvalid(inputPrice);
   } else {
+    markValid(inputPrice);
     inputPrice.setCustomValidity('');
   }
 
@@ -266,29 +275,44 @@ var typeToPrice = {
   'palace': 10000,
 };
 
-inputType.addEventListener('change', function (evt) {
+typeSelect.addEventListener('change', function (evt) {
   var target = evt.target;
 
   if (target.value === 'flat') {
     inputPrice.min = typeToPrice.flat;
-    inputPrice.placeholder = typeToPrice.flat;
-  }
-  if (target.value === 'house') {
+    inputPrice.placeholder = 'от ' + typeToPrice.flat + ' рублей';
+    inputPrice.setCustomValidity('Минимальная цена - 1000');
+  } else if (target.value === 'house') {
     inputPrice.min = typeToPrice.house;
-    inputPrice.placeholder = typeToPrice.house;
-  }
-  if (target.value === 'palace') {
+    inputPrice.placeholder = 'от ' + typeToPrice.house + ' рублей';
+    inputPrice.setCustomValidity('Минимальная цена - 5000');
+  } else if (target.value === 'palace') {
     inputPrice.min = typeToPrice.palace;
-    inputPrice.placeholder = typeToPrice.palace;
-  }
-  if (target.value === 'bungalo') {
+    inputPrice.placeholder = 'от ' + typeToPrice.palace + ' рублей';
+    inputPrice.setCustomValidity('Минимальная цена - 10000');
+  } else if (target.value === 'bungalo') {
     inputPrice.min = typeToPrice.bungalo;
-    inputPrice.placeholder = typeToPrice.bungalo;
+    inputPrice.placeholder = 'от ' + typeToPrice.bungalo + ' рублей';
+    inputPrice.setCustomValidity('Минимальная цена - 0');
+  } else {
+    inputPrice.setCustomValidity('');
   }
 
 });
 
+roomNumberSelect.addEventListener('change', function () {
+
+  if (capacitySelectOption.hasAttribute('selected')) {
+    capacitySelect.setCustomValidity('Выберите доступное количество гостей');
+    markInvalid(capacitySelect);
+  } else {
+    markValid(capacitySelect);
+    capacitySelect.setCustomValidity('');
+  }
+});
+
 var capacitySelectOption = capacitySelect.querySelectorAll('option');
+
 roomNumberSelect.addEventListener('change', function (evt) {
   var target = evt.target;
   if (target.value === '1') {
@@ -316,3 +340,15 @@ roomNumberSelect.addEventListener('change', function (evt) {
     capacitySelectOption[3].disabled = true;
   }
 });
+
+
+submitButton.addEventListener('click', function () {
+  if (adForm.checkValidity() === true) {
+    submitButton.disabled = true;
+  }
+});
+
+resetButton.addEventListener('click', function () {
+  adForm.reset();
+});
+
