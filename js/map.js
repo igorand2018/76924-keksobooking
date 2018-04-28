@@ -209,8 +209,8 @@ var timeoutSelection = adForm.querySelector('#timeout');
 var roomNumberSelect = adForm.querySelector('#room_number');
 var capacitySelect = adForm.querySelector('#capacity');
 
-// var formInputs = adForm.querySelectorAll('input');
-// var formSelects = adForm.querySelectorAll('select');
+var formInputs = adForm.querySelectorAll('input');
+var formSelects = adForm.querySelectorAll('select');
 
 var submitButton = adForm.querySelector('.ad-form__submit');
 var resetButton = adForm.querySelector('.ad-form__reset');
@@ -248,14 +248,31 @@ inputTitle.addEventListener('input', function (evt) {
 });
 
 inputPrice.addEventListener('invalid', function () {
+
   if (inputPrice.validity.valueMissing) {
     inputPrice.setCustomValidity('Обязательное поле');
     markInvalid(inputPrice);
-  } else if (inputPrice.validity.rangeUnderflow) {
+  } else {
+    inputPrice.setCustomValidity('');
+    markValid(inputPrice);
+  }
+
+  if (inputPrice.validity.length.tooShort) {
     markInvalid(inputPrice);
   } else {
     markValid(inputPrice);
     inputPrice.setCustomValidity('');
+  }
+
+});
+
+inputPrice.addEventListener('input', function () {
+  if (inputPrice.value < inputPrice.min) {
+    inputPrice.setCustomValidity('');
+    markValid(inputPrice);
+  } else if (inputPrice.value >= inputPrice.min) {
+    inputPrice.setCustomValidity('Значение меньше требуемого');
+    markInvalid(inputPrice);
   }
 
 });
@@ -300,62 +317,17 @@ typeSelect.addEventListener('change', function (evt) {
 
 });
 
-// roomNumberSelect.addEventListener('change', function () {
-
-//   if (capacitySelectOption.hasAttribute('selected')) {
-//     capacitySelect.setCustomValidity('Выберите доступное количество гостей');
-//     markInvalid(capacitySelect);
-//   } else {
-//     markValid(capacitySelect);
-//     capacitySelect.setCustomValidity('');
-//   }
-// });
-
-var capacitySelectOption = capacitySelect.querySelectorAll('option');
-
-// roomNumberSelect.addEventListener('change', function (evt) {
-//   var target = evt.target;
-//   if (target.value === '1') {
-//     capacitySelectOption[0].disabled = true;
-//     capacitySelectOption[1].disabled = true;
-//     capacitySelectOption[2].disabled = false;
-//     capacitySelectOption[3].disabled = true;
-
-//   }
-//   if (target.value === '2') {
-//     capacitySelectOption[0].disabled = true;
-//     capacitySelectOption[1].disabled = false;
-//     capacitySelectOption[2].disabled = false;
-//     capacitySelectOption[3].disabled = true;
-
-//   }
-//   if (target.value === '3') {
-//     capacitySelectOption[0].disabled = false;
-//     capacitySelectOption[1].disabled = false;
-//     capacitySelectOption[2].disabled = false;
-//     capacitySelectOption[3].disabled = true;
-
-//   }
-//   if (target.value === '100') {
-//     capacitySelectOption[0].disabled = true;
-//     capacitySelectOption[1].disabled = true;
-//     capacitySelectOption[2].disabled = true;
-//     capacitySelectOption[3].disabled = false;
-
-//   }
-// });
-
-
 function setCapacity() {
   var rooms = roomNumberSelect.value;
   var places = capacitySelect.value;
   if (rooms === '1' && places === '1') {
     markValid(capacitySelect);
     capacitySelect.setCustomValidity('');
-  } else {
+  } else if (rooms === '1' && places !== '1') {
     capacitySelect.setCustomValidity('Подоходит для 1 гостя');
     markInvalid(capacitySelect);
   }
+
   if (rooms === '2' && places === '1' || places === '2') {
     markValid(capacitySelect);
     capacitySelect.setCustomValidity('');
@@ -379,26 +351,29 @@ function setCapacity() {
   }
 }
 
-
-roomNumberSelect.addEventListener('change', function () {
+roomNumberSelect.addEventListener('input', function () {
   setCapacity();
 });
-// capacitySelect.addEventListener('input', function () {
-//   if (roomNumberSelect.value === '1') {
-//     if (capacitySelect.value === '3') {
-//       capacitySelect.setCustomValidity('Количество недоступно');
-//     }
-//   }
-// });
 
+function checkFormElementsValidity(Elements) {
+  for (i = 0; i < Elements.length; i++) {
+    if (Elements[i].validity.valid === false) {
+      markInvalid(Elements);
+    }
+  }
+}
 
-// submitButton.addEventListener('click', function () {
-//   if (adForm.checkValidity() === true) {
-//     submitButton.disabled = true;
-//   }
-// });
+submitButton.addEventListener('click', function () {
+  checkFormElementsValidity(formInputs);
+  checkFormElementsValidity(formSelects);
+
+  if (adForm.checkValidity() === true) {
+    submitButton.disabled = false;
+  } else {
+    submitButton.disabled = true;
+  }
+});
 
 resetButton.addEventListener('click', function () {
   adForm.reset();
 });
-
