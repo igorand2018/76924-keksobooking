@@ -209,43 +209,26 @@ var timeoutSelection = adForm.querySelector('#timeout');
 var roomNumberSelect = adForm.querySelector('#room_number');
 var capacitySelect = adForm.querySelector('#capacity');
 
-var formInputs = adForm.querySelectorAll('input');
-var formSelects = adForm.querySelectorAll('select');
-
 var submitButton = adForm.querySelector('.ad-form__submit');
 var resetButton = adForm.querySelector('.ad-form__reset');
 
 function markValid(inputName) {
-  inputName.style.border = '1px solid #d9d9d3';
+  inputName.style.outline = 'inherit';
 }
 function markInvalid(inputName) {
-  inputName.style.border = '1px solid #ffaa99';
+  inputName.style.outline = '1px solid #ffaa99';
 }
 
-// inputTitle.addEventListener('invalid', function () {
-//   if (inputTitle.validity.tooShort) {
-//     inputTitle.setCustomValidity('Минимальная длина заголовка — 30 символов');
-//     markInvalid(inputTitle);
-//   } else if (inputTitle.validity.valueMissing) {
-//     inputTitle.setCustomValidity('Обязательное поле');
-//     markInvalid(inputTitle);
-//   } else {
-//     inputPrice.setCustomValidity('');
-//     markValid(inputTitle);
-//   }
-
-// });
-
-// inputTitle.addEventListener('input', function (evt) {
-//   var target = evt.target;
-//   if (target.value.length < 2) {
-//     inputTitle.setCustomValidity('Минимальная длина заголовка — 30 символов');
-//     markInvalid(inputTitle);
-//   } else if (target.value.length > 30) {
-//     inputTitle.setCustomValidity('');
-//     markValid(inputTitle);
-//   }
-// });
+inputTitle.addEventListener('input', function (evt) {
+  var target = evt.target;
+  if (target.value.length < 2) {
+    inputTitle.setCustomValidity('Минимальная длина заголовка — 30 символов');
+    markInvalid(inputTitle);
+  } else if (target.value.length > 30) {
+    inputTitle.setCustomValidity('');
+    markValid(inputTitle);
+  }
+});
 
 timeinSelection.addEventListener('change', function () {
   timeoutSelection.value = timeinSelection.value;
@@ -262,66 +245,63 @@ var typeToPrice = {
   'palace': 10000,
 };
 
-
-typeSelect.addEventListener('change', function (evt) {
+function setInputPrice(evt) {
   var target = evt.target;
 
-  if (target.value === 'flat') {
-    inputPrice.min = typeToPrice.flat;
-    inputPrice.placeholder = 'от ' + typeToPrice.flat + ' рублей';
-    inputPrice.setCustomValidity('Минимальная цена - 1000');
-  } else if (target.value === 'house') {
-    inputPrice.min = typeToPrice.house;
-    inputPrice.placeholder = 'от ' + typeToPrice.house + ' рублей';
-    inputPrice.setCustomValidity('Минимальная цена - 5000');
-  } else if (target.value === 'palace') {
-    inputPrice.min = typeToPrice.palace;
-    inputPrice.placeholder = 'от ' + typeToPrice.palace + ' рублей';
-    inputPrice.setCustomValidity('Минимальная цена - 10000');
-  } else if (target.value === 'bungalo') {
-    inputPrice.min = typeToPrice.bungalo;
-    inputPrice.placeholder = 'от ' + typeToPrice.bungalo + ' рублей';
-    inputPrice.setCustomValidity('Минимальная цена - 0');
+  var selectValue = target.value;
+  var currentPrice = +inputPrice.value;
+
+  if (currentPrice < typeToPrice[selectValue]) {
+    inputPrice.min = typeToPrice[selectValue];
+    inputPrice.placeholder = 'от ' + typeToPrice[selectValue] + ' рублей';
+    inputPrice.setCustomValidity('Минимальная цена' + typeToPrice[selectValue]);
+    markInvalid(inputPrice);
   } else {
     inputPrice.setCustomValidity('');
+    markInvalid(inputPrice);
   }
 
+}
+
+typeSelect.addEventListener('input', function (evt) {
+  var target = evt.target;
+
+  var selectValue = target.value;
+  var currentPrice = +inputPrice.value;
+
+  if (currentPrice <= typeToPrice[selectValue]) {
+    inputPrice.min = typeToPrice[selectValue];
+    inputPrice.placeholder = 'от ' + typeToPrice[selectValue] + ' рублей';
+    inputPrice.setCustomValidity('Минимальная цена - ' + typeToPrice[selectValue]);
+    markInvalid(inputPrice);
+  } else {
+    inputPrice.setCustomValidity('');
+    markInvalid(inputPrice);
+  }
 });
 
-// function setCapacity() {
-//   var rooms = roomNumberSelect.value;
-//   var places = capacitySelect.value;
+function setCapacity() {
+  var rooms = +roomNumberSelect.value;
+  var places = +capacitySelect.value;
 
-//   if (rooms === '1' && places === '1') {
-//     markValid(capacitySelect);
-//     capacitySelect.setCustomValidity('');
-//   } else if (rooms === '1' && places !== '1') {
-//     capacitySelect.setCustomValidity('Подоходит для 1 гостя');
-//     markInvalid(capacitySelect);
-//   }
+  capacitySelect.setCustomValidity('');
+  markValid(capacitySelect);
 
-//   if (rooms === '2' && places === '1' || places === '2') {
-//     markValid(capacitySelect);
-//     capacitySelect.setCustomValidity('');
-//   } else {
-//     capacitySelect.setCustomValidity('Подоходит для 1 или 2 гостей');
-//     markInvalid(capacitySelect);
-//   }
-//   if (rooms === '3' && places === '1' || places === '2' || places === '3') {
-//     markValid(capacitySelect);
-//     capacitySelect.setCustomValidity('');
-//   } else {
-//     capacitySelect.setCustomValidity('Подоходит для 1 или 2 гостей');
-//     markInvalid(capacitySelect);
-//   }
-//   if (rooms === '100' && places === '0') {
-//     markValid(capacitySelect);
-//     capacitySelect.setCustomValidity('');
-//   } else {
-//     capacitySelect.setCustomValidity('Подоходит для 1 или 2 гостей');
-//     markInvalid(capacitySelect);
-//   }
-// }
+  if (rooms === 100 && places !== 0) {
+    markInvalid(capacitySelect);
+    capacitySelect.setCustomValidity('Не предназначено для гостей');
+  } else if (rooms < places) {
+    markInvalid(capacitySelect);
+    capacitySelect.setCustomValidity('Максимальное количество гостей - ' + rooms);
+  } else if (rooms !== 100 && places === 0) {
+    markInvalid(capacitySelect);
+    capacitySelect.setCustomValidity('Не для гостей - только 100 комнат');
+  }
+}
+
+capacitySelect.addEventListener('input', function () {
+  setCapacity();
+});
 // inputPrice.addEventListener('input', function (evt) {
 //   var target = evt.target;
 //   if (target.value < inputPrice.min) {
@@ -334,58 +314,55 @@ typeSelect.addEventListener('change', function (evt) {
 
 // }); // поменял inputPrice на target
 
-function checkValueMissing(inputName) {
-  if (inputName.validity.valueMissing) {
-    inputName.setCustomValidity('Обязательное поле для заполнения');
-    markInvalid(inputName);
-  } else {
-    inputName.setCustomValidity('');
-    markValid(inputName);
-  }
-}
-
-// function checkTooShort(evt) {
-//   var target = evt.target;
-//   if (target.validity.tooShort) {
-//     inputTitle.setCustomValidity('Минимальная длина заголовка — 30 символов');
-//     markInvalid(inputTitle);
-//   } else {
-//     markValid(inputTitle);
-//     inputTitle.setCustomValidity('');
-//   }
-// }
-
 function validateTitle() {
   if (inputTitle.validity.tooShort) {
     inputTitle.setCustomValidity('Минимальная длина заголовка — 30 символов');
     markInvalid(inputTitle);
+  } else {
+    inputTitle.setCustomValidity('');
+    markValid(inputTitle);
   }
-  checkValueMissing(inputTitle);
+
 }
 
 function validatePrice() {
-  checkValueMissing(inputPrice);
+  if (inputPrice.validity.valueMissing) {
+    inputPrice.setCustomValidity('Обязательное поле для заполнения');
+    markInvalid(inputPrice);
+  } else if (inputPrice.validity.rangeUnderflow) {
+    inputPrice.setCustomValidity('Значение меньше ' + inputPrice.min);
+    markInvalid(inputPrice);
+  } else {
+    inputPrice.setCustomValidity('');
+    markValid(inputPrice);
+  }
 }
 
-function validateCapacity() {
-
-}
-
-
-roomNumberSelect.addEventListener('invalid', function () {
-  // setCapacity();
+inputPrice.addEventListener('input', function () {
+  if (inputPrice.value < inputPrice.min) {
+    inputPrice.setCustomValidity('Значение меньше чем ' + inputPrice.min);
+    markInvalid(inputPrice);
+  } else {
+    inputPrice.setCustomValidity('');
+    markValid(inputPrice);
+  }
 });
 
+// adForm.addEventListener('change', function () {
+//   validatePrice();
+//   setCapacity();
+//   setInputPrice();
+// });
 
-submitButton.addEventListener('click', function (evt) {
-  evt.preventDefault();
-  validateTitle();
-  validatePrice();
-  validateCapacity();
-  if (inputTitle.checkValidity() === true && inputPrice.checkValidity() === true && capacitySelect.checkValidity() === true) {
-    submitButton.disabled = false;
+submitButton.addEventListener('click', function () {
+
+  if (inputTitle.checkValidity() && inputPrice.checkValidity() && capacitySelect.checkValidity()) {
+    adForm.submit();
   } else {
-    submitButton.disabled = true;
+    validateTitle();
+    validatePrice();
+    setCapacity();
+    setInputPrice();
   }
 
 });
