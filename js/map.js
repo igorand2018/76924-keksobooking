@@ -266,16 +266,17 @@ inputPrice.addEventListener('invalid', function () {
 
 });
 
-inputPrice.addEventListener('input', function () {
-  if (inputPrice.value < inputPrice.min) {
+inputPrice.addEventListener('input', function (evt) {
+  var target = evt.target;
+  if (target.value < inputPrice.min) {
     inputPrice.setCustomValidity('');
     markValid(inputPrice);
-  } else if (inputPrice.value >= inputPrice.min) {
+  } else if (target.value >= inputPrice.min) {
     inputPrice.setCustomValidity('Значение меньше требуемого');
     markInvalid(inputPrice);
   }
 
-});
+}); // поменял inputPrice на target
 
 timeinSelection.addEventListener('change', function () {
   timeoutSelection.value = timeinSelection.value;
@@ -317,43 +318,77 @@ typeSelect.addEventListener('change', function (evt) {
 
 });
 
-function setCapacity() {
-  var rooms = roomNumberSelect.value;
-  var places = capacitySelect.value;
+// function setCapacity() {
+//   var rooms = roomNumberSelect.value;
+//   var places = capacitySelect.value;
 
-  if (rooms === '1' && places === '1') {
-    markValid(capacitySelect);
-    capacitySelect.setCustomValidity('');
-  } else if (rooms === '1' && places !== '1') {
-    capacitySelect.setCustomValidity('Подоходит для 1 гостя');
-    markInvalid(capacitySelect);
-  }
+//   if (rooms === '1' && places === '1') {
+//     markValid(capacitySelect);
+//     capacitySelect.setCustomValidity('');
+//   } else if (rooms === '1' && places !== '1') {
+//     capacitySelect.setCustomValidity('Подоходит для 1 гостя');
+//     markInvalid(capacitySelect);
+//   }
 
-  if (rooms === '2' && places === '1' || places === '2') {
-    markValid(capacitySelect);
-    capacitySelect.setCustomValidity('');
+//   if (rooms === '2' && places === '1' || places === '2') {
+//     markValid(capacitySelect);
+//     capacitySelect.setCustomValidity('');
+//   } else {
+//     capacitySelect.setCustomValidity('Подоходит для 1 или 2 гостей');
+//     markInvalid(capacitySelect);
+//   }
+//   if (rooms === '3' && places === '1' || places === '2' || places === '3') {
+//     markValid(capacitySelect);
+//     capacitySelect.setCustomValidity('');
+//   } else {
+//     capacitySelect.setCustomValidity('Подоходит для 1 или 2 гостей');
+//     markInvalid(capacitySelect);
+//   }
+//   if (rooms === '100' && places === '0') {
+//     markValid(capacitySelect);
+//     capacitySelect.setCustomValidity('');
+//   } else {
+//     capacitySelect.setCustomValidity('Подоходит для 1 или 2 гостей');
+//     markInvalid(capacitySelect);
+//   }
+// }
+
+function checkValueMissing(inputName) {
+  if (inputName.validity.valueMissing) {
+    inputName.setCustomValidity('Обязательное поле для заполнения');
+    markInvalid(inputName);
   } else {
-    capacitySelect.setCustomValidity('Подоходит для 1 или 2 гостей');
-    markInvalid(capacitySelect);
-  }
-  if (rooms === '3' && places === '1' || places === '2' || places === '3') {
-    markValid(capacitySelect);
-    capacitySelect.setCustomValidity('');
-  } else {
-    capacitySelect.setCustomValidity('Подоходит для 1 или 2 гостей');
-    markInvalid(capacitySelect);
-  }
-  if (rooms === '100' && places === '0') {
-    markValid(capacitySelect);
-    capacitySelect.setCustomValidity('');
-  } else {
-    capacitySelect.setCustomValidity('Подоходит для 1 или 2 гостей');
-    markInvalid(capacitySelect);
+    inputName.setCustomValidity('');
+    markValid(inputName);
   }
 }
 
+function checkRangeUnderflow(inputName, validationMessage) {
+  if (inputName.validity.rangeUnderflow) {
+    inputName.setCustomValidity(validationMessage);
+    markInvalid(inputName);
+  } else {
+    markValid(inputName);
+    inputName.setCustomValidity('');
+  }
+}
+
+function validateTitle() {
+  checkValueMissing(inputTitle);
+  checkRangeUnderflow(inputTitle, 'Не менее 30 символов');
+}
+
+function validatePrice() {
+  checkValueMissing(inputPrice);
+}
+
+function validateCapacity() {
+
+}
+
+
 roomNumberSelect.addEventListener('invalid', function () {
-  setCapacity();
+  // setCapacity();
 });
 
 function checkFormElementsValidity(Elements) {
