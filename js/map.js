@@ -302,17 +302,6 @@ function setCapacity() {
 capacitySelect.addEventListener('input', function () {
   setCapacity();
 });
-// inputPrice.addEventListener('input', function (evt) {
-//   var target = evt.target;
-//   if (target.value < inputPrice.min) {
-//     inputPrice.setCustomValidity('');
-//     markValid(inputPrice);
-//   } else if (target.value >= inputPrice.min) {
-//     inputPrice.setCustomValidity('Значение меньше требуемого');
-//     markInvalid(inputPrice);
-//   }
-
-// }); // поменял inputPrice на target
 
 function validateTitle() {
   if (inputTitle.validity.tooShort) {
@@ -347,12 +336,6 @@ inputPrice.addEventListener('input', function () {
     markValid(inputPrice);
   }
 });
-
-// adForm.addEventListener('change', function () {
-//   validatePrice();
-//   setCapacity();
-//   setInputPrice();
-// });
 
 submitButton.addEventListener('click', function () {
 
