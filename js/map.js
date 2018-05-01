@@ -346,6 +346,7 @@ resetButton.addEventListener('click', function () {
 
 // drag map-pin--main
 
+
 startPin.addEventListener('mousedown', function (evt) {
   evt.preventDefault();
   var startCoords = {
@@ -372,8 +373,8 @@ startPin.addEventListener('mousedown', function (evt) {
     var limits = {
       top: map.offsetTop,
       right: map.offsetWidth + map.offsetLeft - startPin.offsetWidth,
-      bottom: map.offsetHeight - startPin.offsetHeight,
-      left: map.offsetLeft
+      bottom: map.offsetHeight + map.offsetTop - startPin.offsetHeight - mapFiltersContainer.offsetHeight - 22,
+      left: 0
     };
 
     var newLocation = {
@@ -382,13 +383,13 @@ startPin.addEventListener('mousedown', function (evt) {
     };
 
     if (currentX > limits.right) {
-      newLocation.x = currentX;
+      newLocation.x = limits.right;
     } else if (currentX > limits.left) {
       newLocation.x = currentX;
     }
 
     if (currentY > limits.bottom) {
-      newLocation.y = currentY;
+      newLocation.y = limits.bottom;
     } else if (currentY > limits.top) {
       newLocation.y = currentY;
     }
