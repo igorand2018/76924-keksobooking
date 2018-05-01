@@ -159,22 +159,12 @@ function activateApp() {
 
 var formAdressInput = document.getElementById('address');
 
-var startPosition = {
-  location: {
-    x: 570,
-    y: 375
-  }
-};
-
-function setAddress() {
-  formAdressInput.value = (startPosition.location.x) + ', ' + Math.round(startPosition.location.y - (PIN_HEIGTH / 2));
-}
+formAdressInput.value = '570, 320';
 
 var startPin = document.querySelector('.map__pins .map__pin');
 
 startPin.addEventListener('mouseup', function () {
   activateApp();
-  setAddress();
   getPins();
 });
 
@@ -352,4 +342,75 @@ submitButton.addEventListener('click', function () {
 
 resetButton.addEventListener('click', function () {
   adForm.reset();
+});
+
+// drag map-pin--main
+
+startPin.addEventListener('mousedown', function (evt) {
+  evt.preventDefault();
+  var startCoords = {
+    x: evt.clientX,
+    y: evt.clientY
+  };
+
+  var onMouseMove = function (moveEvt) {
+    moveEvt.preventDefault();
+
+    var shift = {
+      x: startCoords.x - moveEvt.clientX,
+      y: startCoords.y - moveEvt.clientY
+    };
+
+    startCoords = {
+      x: moveEvt.clientX,
+      y: moveEvt.clientY
+    };
+
+
+    // formAdressInput.value = ((startPin.offsetTop - shift.y) + PIN_HEIGTH) + ', ' + Math.floor((startPin.offsetLeft - shift.x) + PIN_WINDTH / 2);
+
+    var currentY = (startPin.offsetTop - shift.y);
+    var currentX = (startPin.offsetLeft - shift.x);
+
+    var limits = {
+      top: map.offsetTop,
+      right: map.offsetWidth + map.offsetLeft - startPin.offsetWidth,
+      bottom: map.offsetHeight + map.offsetTop - startPin.offsetHeight,
+      left: map.offsetLeft
+    };
+
+    var newLocation = {
+      x: limits.left,
+      y: limits.top
+    };
+
+    if (currentX > limits.right) {
+      newLocation.x = currentX;
+    } else if (currentX > limits.left) {
+      newLocation.x = currentX;
+    }
+
+    if (currentY > limits.bottom) {
+      newLocation.y = currentY;
+    } else if (currentY > limits.top) {
+      newLocation.y = currentY;
+    }
+
+    startPin.style.top = newLocation.y + 'px';
+    startPin.style.left = newLocation.x + 'px';
+
+    // startPin.style.top = (startPin.offsetTop - shift.y) + 'px';
+    // startPin.style.left = (startPin.offsetLeft - shift.x) + 'px';
+    formAdressInput.value = ((startPin.offsetTop - shift.y) + PIN_HEIGTH) + ', ' + Math.floor((startPin.offsetLeft - shift.x) + PIN_WINDTH / 2);
+  };
+
+  var onMouseUp = function (upEvt) {
+    upEvt.preventDefault();
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
+  };
+
+  document.addEventListener('mousemove', onMouseMove);
+  document.addEventListener('mouseup', onMouseUp);
+
 });
