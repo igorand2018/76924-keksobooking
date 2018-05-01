@@ -372,7 +372,7 @@ startPin.addEventListener('mousedown', function (evt) {
 
     var limits = {
       top: map.offsetTop,
-      right: map.offsetWidth + map.offsetLeft - startPin.offsetWidth,
+      right: map.offsetWidth - startPin.offsetWidth,
       bottom: map.offsetHeight + map.offsetTop - startPin.offsetHeight - mapFiltersContainer.offsetHeight - 22,
       left: 0
     };
