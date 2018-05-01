@@ -366,16 +366,13 @@ startPin.addEventListener('mousedown', function (evt) {
       y: moveEvt.clientY
     };
 
-
-    // formAdressInput.value = ((startPin.offsetTop - shift.y) + PIN_HEIGTH) + ', ' + Math.floor((startPin.offsetLeft - shift.x) + PIN_WINDTH / 2);
-
     var currentY = (startPin.offsetTop - shift.y);
     var currentX = (startPin.offsetLeft - shift.x);
 
     var limits = {
       top: map.offsetTop,
       right: map.offsetWidth + map.offsetLeft - startPin.offsetWidth,
-      bottom: map.offsetHeight + map.offsetTop - startPin.offsetHeight,
+      bottom: map.offsetHeight - startPin.offsetHeight,
       left: map.offsetLeft
     };
 
@@ -399,8 +396,6 @@ startPin.addEventListener('mousedown', function (evt) {
     startPin.style.top = newLocation.y + 'px';
     startPin.style.left = newLocation.x + 'px';
 
-    // startPin.style.top = (startPin.offsetTop - shift.y) + 'px';
-    // startPin.style.left = (startPin.offsetLeft - shift.x) + 'px';
     formAdressInput.value = ((startPin.offsetTop - shift.y) + PIN_HEIGTH) + ', ' + Math.floor((startPin.offsetLeft - shift.x) + PIN_WINDTH / 2);
   };
 
