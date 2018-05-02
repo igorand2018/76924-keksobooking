@@ -161,12 +161,14 @@ var formAdressInput = document.getElementById('address');
 
 formAdressInput.value = '570, 320';
 
-var startPin = document.querySelector('.map__pins .map__pin');
 
-startPin.addEventListener('mouseup', function () {
+var startPin = document.querySelector('.map__pins .map__pin:first-of-type');
+
+function onStartPinClick() {
   activateApp();
   getPins();
-});
+}
+startPin.addEventListener('mouseup', onStartPinClick);
 
 function removePreviousCard() {
   var previousCard = document.querySelector('.popup');
@@ -178,7 +180,7 @@ function removePreviousCard() {
 mapPins.addEventListener('click', function (evt) {
   var target = evt.target;
   while (target !== mapPins) {
-    if (target.matches('.map__pin')) {
+    if (target.matches('.map__pin') && target !== startPin) {
       var currentPinIndex = target.getAttribute('data-index-number');
       removePreviousCard();
       renderCard(similarAds[currentPinIndex]);
