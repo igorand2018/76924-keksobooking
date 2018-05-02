@@ -1,9 +1,6 @@
 'use strict';
-// Пока что добавленные переменные
 
-// <<<<<<<Пока что добавленные переменные
-
-(function () {
+window.card = (function () {
   var mapCard = document.querySelector('template')
       .content
       .querySelector('.map__card');
@@ -13,9 +10,9 @@
   var featuresFragment = document.createDocumentFragment();
 
   function getOfferFeatures() {
-    for (var i = 0; i < window.similarAds[0].offer.features.length; i++) {
+    for (var i = 0; i < window.appData.similarAds[0].offer.features.length; i++) {
       var feature = document.createElement('li');
-      var popupFeatureCustom = 'popup__feature--' + window.similarAds[0].offer.features[i];
+      var popupFeatureCustom = 'popup__feature--' + window.appData.similarAds[0].offer.features[i];
       feature.classList.add('popup__feature', popupFeatureCustom);
 
       featuresFragment.appendChild(feature);
@@ -26,17 +23,17 @@
   var photoFragment = document.createDocumentFragment();
 
   function getofferPhotos() {
-    for (var i = 0; i < window.similarAds[0].offer.photos.length; i++) {
+    for (var i = 0; i < window.appData.similarAds[0].offer.photos.length; i++) {
       var photo = document.createElement('img');
       photo.width = 45;
       photo.height = 40;
       photo.classList.add('popup__photo');
-      photo.src = window.similarAds[0].offer.photos[i];
+      photo.src = window.appData.similarAds[0].offer.photos[i];
       photoFragment.appendChild(photo);
     }
     return photoFragment;
   }
-  window.card = {
+  return {
     renderCard: function (arrayElement) {
       var newCard = mapCard.cloneNode(true);
       newCard.querySelector('.popup__title').textContent = arrayElement.offer.title;
@@ -51,12 +48,12 @@
       newCard.querySelector('.popup__photos').innerHTML = '';
       newCard.querySelector('.popup__photos').appendChild(getofferPhotos());
       newCard.querySelector('.popup__avatar').src = arrayElement.author.avatar;
-      window.map.insertBefore(newCard, mapFiltersContainer);
+      window.map.map.insertBefore(newCard, mapFiltersContainer);
       newCard.querySelector('.popup__close').addEventListener('click', function () {
-        window.map.removeChild(newCard);
+        window.map.map.removeChild(newCard);
       });
       function closePopup() {
-        window.map.removeChild(newCard);
+        window.map.map.removeChild(newCard);
         document.removeEventListener('keydown', onPopupEscPress);
       }
       function onPopupEscPress(evt) {
@@ -66,7 +63,8 @@
       }
 
       document.addEventListener('keydown', onPopupEscPress);
-    }
+    },
+    mapFiltersContainer: mapFiltersContainer
   };
-  window.mapFiltersContainer = mapFiltersContainer;
+
 })();

@@ -14,6 +14,7 @@ window.formValidation = (function () {
   var resetButton = adForm.querySelector('.ad-form__reset');
   var formAdressInput = document.getElementById('address');
   formAdressInput.value = '570, 320';
+
   for (var s = 0; s < adFormFieldSet.length; s++) {
     adFormFieldSet[s].setAttribute('disabled', 'disabled');
   }
@@ -160,7 +161,7 @@ window.formValidation = (function () {
     },
     adForm: adForm,
     adFormFieldSet: adFormFieldSet,
-    formAdressInput: formAdressInput
+    formAdressInput: formAdressInput,
 
   };
 

@@ -1,5 +1,5 @@
 'use strict';
-(function () {
+window.appData = (function () {
 
   var ADS = 8;
   var OFFER_TITLES = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
@@ -56,8 +56,11 @@
     similarAds.push(currentElement);
 
   }
-  window.similarAds = similarAds;
-  window.ADS = ADS;
+  return {
+    ADS: ADS,
+    similarAds: similarAds,
+  };
+
 })();
 
 
