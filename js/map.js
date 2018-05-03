@@ -100,6 +100,17 @@ window.map = (function () {
     document.addEventListener('mouseup', onMouseUp);
 
   });
+  // для Загрузки
+  // window.load(function (similarAds) {
+  //   var fragment = document.createDocumentFragment();
+
+  //   for (var i = 0; i < window.card.similarAds.length; i++) {
+  //     fragment.appendChild(window.card.renderCard(newCard));
+  //   }
+  //   similarAds.appendChild(fragment);
+
+  // });
+  // для Загрузки
   return {
     map: map,
     startPin: startPin
