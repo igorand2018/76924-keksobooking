@@ -9,7 +9,7 @@ window.pin = (function () {
 
   return {
     getPins: function () {
-      for (var i = 0; i < window.appData.ADS; i++) {
+      for (var i = 0; i < 5; i++) {
         var newPin = mapPin.cloneNode(true);
         newPin.style.top = window.appData.similarAds[i].location.y - PIN_HEIGTH + 'px';
         newPin.style.left = window.appData.similarAds[i].location.x - (PIN_WINDTH / 2) + 'px';
