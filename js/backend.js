@@ -29,7 +29,8 @@
 
     xhr.addEventListener('load', function () {
       if (xhr.status === 200) {
-        onLoad(window.appData.similarAds = xhr.response);
+        window.similarAds = xhr.response;
+        onLoad(xhr.response);
 
       } else {
         var error;

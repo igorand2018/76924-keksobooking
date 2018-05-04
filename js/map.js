@@ -14,7 +14,7 @@ window.map = (function () {
   function onStartPinClick(evt) {
     evt.preventDefault();
     activateApp();
-    window.load(window.pin.getPins(), errorHandler);
+    window.load(window.pin.getPins, errorHandler);
   }
   // Error handler
   var errorHandler = function (errorMessage) {
@@ -45,7 +45,7 @@ window.map = (function () {
       if (target.matches('.map__pin') && target !== startPin) {
         var currentPinIndex = target.getAttribute('data-index-number');
         removePreviousCard();
-        window.card.renderCard(window.appData.similarAds[currentPinIndex]);
+        window.card.renderCard(window.similarAds[currentPinIndex]);
         break;
       }
       target = target.parentElement;

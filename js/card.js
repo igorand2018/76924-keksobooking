@@ -10,9 +10,9 @@ window.card = (function () {
   var featuresFragment = document.createDocumentFragment();
 
   function getOfferFeatures() {
-    for (var i = 0; i < window.appData.similarAds[0].offer.features.length; i++) {
+    for (var i = 0; i < window.similarAds[0].offer.features.length; i++) {
       var feature = document.createElement('li');
-      var popupFeatureCustom = 'popup__feature--' + window.appData.similarAds[0].offer.features[i];
+      var popupFeatureCustom = 'popup__feature--' + window.similarAds[0].offer.features[i];
       feature.classList.add('popup__feature', popupFeatureCustom);
 
       featuresFragment.appendChild(feature);
@@ -23,12 +23,12 @@ window.card = (function () {
   var photoFragment = document.createDocumentFragment();
 
   function getofferPhotos() {
-    for (var i = 0; i < window.appData.similarAds[0].offer.photos.length; i++) {
+    for (var i = 0; i < window.similarAds[0].offer.photos.length; i++) {
       var photo = document.createElement('img');
       photo.width = 45;
       photo.height = 40;
       photo.classList.add('popup__photo');
-      photo.src = window.appData.similarAds[0].offer.photos[i];
+      photo.src = window.similarAds[0].offer.photos[i];
       photoFragment.appendChild(photo);
     }
     return photoFragment;
