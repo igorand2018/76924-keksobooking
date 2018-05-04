@@ -144,20 +144,6 @@ window.formValidation = (function () {
 
   });
 
-  // upload on backend.js
-
-
-  // adForm.addEventListener('submit', function (evt) {
-  //   window.upload(new FormData(adForm), function (response) {
-  //     adForm.submit();
-  //     successMessage.classList.remove('hidden');
-  //     adForm.reset();
-  //   });
-  //   evt.preventDefault();
-
-  // });
-  // upload on backend.js
-
   resetButton.addEventListener('click', function () {
     adForm.reset();
   });
@@ -184,9 +170,6 @@ window.formValidation = (function () {
 
   };
 
-  // window.adForm = adForm;
-  // window.adFormFieldSet = adFormFieldSet;
-  // window.formAdressInput = formAdressInput;
 })();
 
 
