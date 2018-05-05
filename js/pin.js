@@ -34,7 +34,7 @@ window.pin = (function () {
 var housingTypeSelect = document.querySelector('#housing-type');
 var housingPriceSelect = document.querySelector('#housing-price');
 // var housingRoomsSelect = document.querySelector('#housing-rooms');
-var housingGuestsSelect = document.querySelector('#housing-guests');
+// var housingGuestsSelect = document.querySelector('#housing-guests');
 
 housingTypeSelect.addEventListener('change', function (evt) {
   var selectValue = evt.target.value;
