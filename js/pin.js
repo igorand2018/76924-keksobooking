@@ -21,9 +21,6 @@ window.pin = (function () {
       }
       mapPins.appendChild(pinsFragment);
     },
-    removePins: function () {
-      mapPins.remove(mapPin);
-    },
     // updatePins: function () {
 
     // },
@@ -42,9 +39,8 @@ var housingTypeSelect = document.querySelector('#housing-type');
 housingTypeSelect.addEventListener('change', function (evt) {
   var selectValue = evt.target.value;
   if (selectValue === 'flat') {
-    // var oldPins = window.pin.mapPins.querySelectorAll('.map__pin');
-    // oldPins.remove();
-    window.pin.removePins();
+    var oldPins = window.pin.mapPins.querySelectorAll('.map__pin');
+    oldPins.remove();
     var newArray = window.similarAds.filter(function (ad) {
       return ad.offer.type === 'flat';
     });
