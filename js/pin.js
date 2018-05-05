@@ -32,18 +32,85 @@ window.pin = (function () {
 })();
 
 var housingTypeSelect = document.querySelector('#housing-type');
-// var housingPriceSelect = document.querySelector('#housing-price');
+var housingPriceSelect = document.querySelector('#housing-price');
 // var housingRoomsSelect = document.querySelector('#housing-rooms');
-// var housingGuestsSelect = document.querySelector('#housing-price');
+var housingGuestsSelect = document.querySelector('#housing-guests');
 
 housingTypeSelect.addEventListener('change', function (evt) {
   var selectValue = evt.target.value;
   if (selectValue === 'flat') {
     var oldPins = window.pin.mapPins.querySelectorAll('.map__pin');
-    oldPins.remove();
+    for (var i = oldPins.lenght - 1; i >= 0; i--) {
+      window.pin.mapPins.removeChild(oldPins[i]);
+    }
     var newArray = window.similarAds.filter(function (ad) {
       return ad.offer.type === 'flat';
     });
     window.pin.getPins(newArray);
   }
 });
+
+housingPriceSelect.addEventListener('change', function (evt) {
+  var selectValue = evt.target.value;
+
+  if (selectValue === 'any') {
+
+    var newArray = window.similarAds.filter(function (ad) {
+      return ad.offer.price > 0;
+    });
+    window.pin.getPins(newArray);
+
+  } else if (selectValue === 'middle') {
+
+    newArray = window.similarAds.filter(function (ad) {
+      return ad.offer.price > 0;
+    });
+    window.pin.getPins(newArray);
+
+  } else if (selectValue === 'low') {
+
+    newArray = window.similarAds.filter(function (ad) {
+      return ad.offer.price < 10000;
+    });
+    window.pin.getPins(newArray);
+
+  } else if (selectValue === 'high') {
+
+    newArray = window.similarAds.filter(function (ad) {
+      return ad.offer.price > 50000;
+    });
+    window.pin.getPins(newArray);
+  }
+});
+
+// housingRoomsSelect.addEventListener('change', function (evt) {
+//   var selectValue = evt.target.value;
+//   alert(selectValue);
+//   if (selectValue === 'any') {
+
+//   } else if (selectValue === '1') {
+
+//   } else if (selectValue === '2') {
+
+//   }  else if (selectValue === '3') {
+
+//   }
+
+// });
+
+// housingGuestsSelect.addEventListener('change', function (evt) {
+//   var selectValue = evt.target.value;
+//   alert(selectValue);
+//   if (selectValue === 'any') {
+//     var newArray = window.similarAds.filter(function (ad) {
+//       return ad.offer.price > 50000;
+//     });
+//     window.pin.getPins(newArray);
+
+//   } else if (selectValue === '1') {
+
+//   } else if (selectValue === '2') {
+
+//   }
+
+// });
