@@ -4,6 +4,7 @@ window.pin = (function () {
   var PIN_HEIGTH = 87;
   var PIN_WINDTH = 65;
   var mapPin = document.querySelector('.map__pin');
+  var allMapPins = document.querySelectorAll('.map__pin');
   var mapPins = document.querySelector('.map__pins');
   var pinsFragment = document.createDocumentFragment();
 
@@ -20,10 +21,33 @@ window.pin = (function () {
       }
       mapPins.appendChild(pinsFragment);
     },
+    removePins: function () {
+      mapPins.remove(mapPin);
+    },
+    // updatePins: function () {
+
+    // },
+    allMapPins: allMapPins,
     mapPins: mapPins,
     PIN_HEIGTH: PIN_HEIGTH,
     PIN_WINDTH: PIN_WINDTH
   };
 })();
 
+var housingTypeSelect = document.querySelector('#housing-type');
+// var housingPriceSelect = document.querySelector('#housing-price');
+// var housingRoomsSelect = document.querySelector('#housing-rooms');
+// var housingGuestsSelect = document.querySelector('#housing-price');
 
+housingTypeSelect.addEventListener('change', function (evt) {
+  var selectValue = evt.target.value;
+  if (selectValue === 'flat') {
+    // var oldPins = window.pin.mapPins.querySelectorAll('.map__pin');
+    // oldPins.remove();
+    window.pin.removePins();
+    var newArray = window.similarAds.filter(function (ad) {
+      return ad.offer.type === 'flat';
+    });
+    window.pin.getPins(newArray);
+  }
+});
