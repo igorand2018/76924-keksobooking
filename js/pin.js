@@ -8,13 +8,13 @@ window.pin = (function () {
   var pinsFragment = document.createDocumentFragment();
 
   return {
-    getPins: function () {
-      for (var i = 0; i < window.appData.ADS; i++) {
+    getPins: function (offersArray) {
+      for (var i = 0; i < 5; i++) {
         var newPin = mapPin.cloneNode(true);
-        newPin.style.top = window.appData.similarAds[i].location.y - PIN_HEIGTH + 'px';
-        newPin.style.left = window.appData.similarAds[i].location.x - (PIN_WINDTH / 2) + 'px';
-        newPin.querySelector('img').src = window.appData.similarAds[i].author.avatar;
-        newPin.querySelector('img').alt = window.appData.similarAds[i].offer.title;
+        newPin.style.top = offersArray[i].location.y - PIN_HEIGTH + 'px';
+        newPin.style.left = offersArray[i].location.x - (PIN_WINDTH / 2) + 'px';
+        newPin.querySelector('img').src = offersArray[i].author.avatar;
+        newPin.querySelector('img').alt = offersArray[i].offer.title;
         newPin.dataset.indexNumber = [i];
         pinsFragment.appendChild(newPin);
       }

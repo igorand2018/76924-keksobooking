@@ -13,6 +13,7 @@ window.formValidation = (function () {
   var submitButton = adForm.querySelector('.ad-form__submit');
   var resetButton = adForm.querySelector('.ad-form__reset');
   var formAdressInput = document.getElementById('address');
+  var successMessage = document.querySelector('.success');
   formAdressInput.value = '570, 320';
 
   for (var s = 0; s < adFormFieldSet.length; s++) {
@@ -126,10 +127,14 @@ window.formValidation = (function () {
     }
   });
 
-  submitButton.addEventListener('click', function () {
+  submitButton.addEventListener('click', function (evt) {
 
     if (inputTitle.checkValidity() && inputPrice.checkValidity() && capacitySelect.checkValidity()) {
-      adForm.submit();
+      window.upload(new FormData(adForm), function () {
+        successMessage.classList.remove('hidden');
+        adForm.reset();
+      });
+      evt.preventDefault();
     } else {
       validateTitle();
       validatePrice();
@@ -165,9 +170,6 @@ window.formValidation = (function () {
 
   };
 
-  // window.adForm = adForm;
-  // window.adFormFieldSet = adFormFieldSet;
-  // window.formAdressInput = formAdressInput;
 })();
 
 
