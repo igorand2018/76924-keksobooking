@@ -5,7 +5,7 @@ window.map = (function () {
   var startPin = document.querySelector('.map__pins .map__pin:first-of-type');
   var TOP_OFFSET = 150;
   var LEFT_OFFSET = 0;
-  var PIN_END = 22;
+  var BOTTOM_OFFSET = 500;
 
   function activateApp() {
     window.formValidation.adForm.classList.remove('ad-form--disabled');
@@ -82,7 +82,7 @@ window.map = (function () {
       var limits = {
         top: map.offsetTop + TOP_OFFSET - startPin.offsetHeight,
         right: map.offsetWidth - startPin.offsetWidth,
-        bottom: map.offsetHeight + map.offsetTop - startPin.offsetHeight - window.card.mapFiltersContainer.offsetHeight - PIN_END,
+        bottom: BOTTOM_OFFSET - window.pin.PIN_HEIGTH,
         left: LEFT_OFFSET
       };
 
