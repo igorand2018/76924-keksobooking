@@ -62,6 +62,9 @@ window.map = (function () {
     var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
 
+      var TOP_OFFSET = 150;
+      var LEFT_OFFSET = 0;
+
       var shift = {
         x: startCoords.x - moveEvt.clientX,
         y: startCoords.y - moveEvt.clientY
@@ -76,10 +79,10 @@ window.map = (function () {
       var currentX = (startPin.offsetLeft - shift.x);
 
       var limits = {
-        top: map.offsetTop,
+        top: map.offsetTop + TOP_OFFSET - startPin.offsetHeight,
         right: map.offsetWidth - startPin.offsetWidth,
         bottom: map.offsetHeight + map.offsetTop - startPin.offsetHeight - window.card.mapFiltersContainer.offsetHeight - 22,
-        left: 0
+        left: LEFT_OFFSET
       };
 
       var newLocation = {
