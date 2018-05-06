@@ -137,6 +137,7 @@ window.formValidation = (function () {
     setTimeout(function () {
       successMessage.classList.add('hidden');
     }, 3000);
+    window.pin.removePins();
   }
 
   submitButton.addEventListener('click', function (evt) {
@@ -146,6 +147,7 @@ window.formValidation = (function () {
         successMessage.classList.remove('hidden');
         adForm.reset();
         deactivateApp();
+
       });
       evt.preventDefault();
     } else {

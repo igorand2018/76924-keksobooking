@@ -62,6 +62,12 @@ window.pin = (function () {
       }
       mapPins.appendChild(pinsFragment);
     },
+    removePins: function () {
+      var oldPins = window.pin.mapPins.querySelectorAll('.map__pin');
+      for (var i = oldPins.length - 1; i >= 1; i--) {
+        window.pin.mapPins.removeChild(oldPins[i]);
+      }
+    },
     allMapPins: allMapPins,
     mapPins: mapPins,
     PIN_HEIGTH: PIN_HEIGTH,
