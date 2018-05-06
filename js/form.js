@@ -127,18 +127,21 @@ window.formValidation = (function () {
     }
   });
 
+  function deactivateApp() {
+    window.formValidation.adForm.classList.add('ad-form--disabled');
+    window.map.map.classList.add('map--faded');
+    for (s = 0; s < window.formValidation.adFormFieldSet.length; s++) {
+      window.formValidation.adFormFieldSet[s].removeAttribute('disabled');
+    }
+  }
+
   submitButton.addEventListener('click', function (evt) {
 
     if (inputTitle.checkValidity() && inputPrice.checkValidity() && capacitySelect.checkValidity()) {
       window.upload(new FormData(adForm), function () {
         successMessage.classList.remove('hidden');
         adForm.reset();
-        setTimeout(successMessage.classList.add('hidden'), 5000);
-        window.formValidation.adForm.classList.add('ad-form--disabled');
-        window.map.map.classList.add('map--faded');
-        for (s = 0; s < window.formValidation.adFormFieldSet.length; s++) {
-          window.formValidation.adFormFieldSet[s].removeAttribute('disabled');
-        }
+        // setTimeout(successMessage.classList.add('hidden'), 50000);
       });
       evt.preventDefault();
     } else {
@@ -152,6 +155,7 @@ window.formValidation = (function () {
 
   resetButton.addEventListener('click', function () {
     adForm.reset();
+    deactivateApp();
   });
 
   return {
