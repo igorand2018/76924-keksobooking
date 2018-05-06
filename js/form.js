@@ -1,4 +1,4 @@
-//  Файл form.js
+
 'use strict';
 window.formValidation = (function () {
   var adForm = document.querySelector('.ad-form');
