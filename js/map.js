@@ -86,25 +86,25 @@ window.map = (function () {
         left: LEFT_OFFSET
       };
 
-      var newLocation = {
+      var NEW_COORD = {
         x: limits.left,
         y: limits.top
       };
 
       if (currentX > limits.right) {
-        newLocation.x = limits.right;
+        NEW_COORD.x = limits.right;
       } else if (currentX > limits.left) {
-        newLocation.x = currentX;
+        NEW_COORD.x = currentX;
       }
 
       if (currentY > limits.bottom) {
-        newLocation.y = limits.bottom;
+        NEW_COORD.y = limits.bottom;
       } else if (currentY > limits.top) {
-        newLocation.y = currentY;
+        NEW_COORD.y = currentY;
       }
 
-      startPin.style.top = newLocation.y + 'px';
-      startPin.style.left = newLocation.x + 'px';
+      startPin.style.top = NEW_COORD.y + 'px';
+      startPin.style.left = NEW_COORD.x + 'px';
 
       window.formValidation.formAdressInput.value = ((startPin.offsetTop - shift.y) + window.pin.PIN_HEIGTH) + ', ' + Math.floor((startPin.offsetLeft - shift.x) + window.pin.PIN_WINDTH / 2);
     };
