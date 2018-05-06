@@ -130,9 +130,13 @@ window.formValidation = (function () {
   function deactivateApp() {
     window.formValidation.adForm.classList.add('ad-form--disabled');
     window.map.map.classList.add('map--faded');
+    formAdressInput.value = '570, 320';
     for (s = 0; s < window.formValidation.adFormFieldSet.length; s++) {
       window.formValidation.adFormFieldSet[s].removeAttribute('disabled');
     }
+    setTimeout(function () {
+      successMessage.classList.add('hidden');
+    }, 3000);
   }
 
   submitButton.addEventListener('click', function (evt) {
@@ -141,7 +145,7 @@ window.formValidation = (function () {
       window.upload(new FormData(adForm), function () {
         successMessage.classList.remove('hidden');
         adForm.reset();
-        // setTimeout(successMessage.classList.add('hidden'), 50000);
+        deactivateApp();
       });
       evt.preventDefault();
     } else {
@@ -177,9 +181,8 @@ window.formValidation = (function () {
     adForm: adForm,
     adFormFieldSet: adFormFieldSet,
     formAdressInput: formAdressInput,
-
+    successMessage: successMessage
   };
-
 })();
 
 
