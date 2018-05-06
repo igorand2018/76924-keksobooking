@@ -115,9 +115,6 @@ window.map = (function () {
     document.addEventListener('mouseup', onMouseUp);
 
   });
-  // load on backend.js
-
-  // load on backend.js
   return {
     map: map,
     startPin: startPin

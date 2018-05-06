@@ -1,5 +1,5 @@
 'use strict';
-// Отправка данных на сервер
+
 (function () {
   var URL = 'https://js.dump.academy/keksobooking';
 
@@ -20,7 +20,6 @@
   };
 })();
 
-// Получение данных с сервера
 (function () {
   window.load = function (onLoad, onError) {
     var URL = 'https://js.dump.academy/keksobooking/data';
