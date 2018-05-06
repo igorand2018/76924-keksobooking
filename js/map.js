@@ -3,6 +3,10 @@
 window.map = (function () {
   var map = document.querySelector('.map');
   var startPin = document.querySelector('.map__pins .map__pin:first-of-type');
+  var TOP_OFFSET = 150;
+  var LEFT_OFFSET = 0;
+  var PIN_END = 22;
+
   function activateApp() {
     window.formValidation.adForm.classList.remove('ad-form--disabled');
     map.classList.remove('map--faded');
@@ -16,7 +20,7 @@ window.map = (function () {
     activateApp();
     window.load(window.pin.getPins, errorHandler);
   }
-  // Error handler
+
   var errorHandler = function (errorMessage) {
     var errorBlock = document.createElement('div');
     errorBlock.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: #ffaa99;';
@@ -28,7 +32,7 @@ window.map = (function () {
     errorBlock.textContent = errorMessage;
     document.body.insertAdjacentElement('afterbegin', errorBlock);
   };
-  // End of Error handler
+
 
   startPin.addEventListener('mouseup', onStartPinClick);
 
@@ -62,9 +66,6 @@ window.map = (function () {
     var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
 
-      var TOP_OFFSET = 150;
-      var LEFT_OFFSET = 0;
-
       var shift = {
         x: startCoords.x - moveEvt.clientX,
         y: startCoords.y - moveEvt.clientY
@@ -81,7 +82,7 @@ window.map = (function () {
       var limits = {
         top: map.offsetTop + TOP_OFFSET - startPin.offsetHeight,
         right: map.offsetWidth - startPin.offsetWidth,
-        bottom: map.offsetHeight + map.offsetTop - startPin.offsetHeight - window.card.mapFiltersContainer.offsetHeight - 22,
+        bottom: map.offsetHeight + map.offsetTop - startPin.offsetHeight - window.card.mapFiltersContainer.offsetHeight - PIN_END,
         left: LEFT_OFFSET
       };
 

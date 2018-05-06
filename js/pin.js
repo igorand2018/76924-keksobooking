@@ -37,21 +37,21 @@ mapFiltersForm.addEventListener('change', function () {
   filterallSelects();
 });
 
-var housingPrice = {
+var HOUSING_PRICE = {
   'any': 'ad.offer.rooms > 0',
   'low': 'ad.offer.rooms < 10000',
   'middle': 'ad.offer.rooms > 10000',
   'high': 'ad.offer.rooms > 50000'
 };
 
-var housingRooms = {
+var HOUSING_ROOMS = {
   'any': 0,
   '1': 1,
   '2': 2,
   '3': 3
 };
 
-var housingGuests = {
+var HOUSING_GUESTS = {
   'any': 0,
   '1': 1,
   '2': 2
@@ -61,14 +61,14 @@ function filterallSelects() {
   window.similarAds.filter(function (ad) {
     return ad.offer.type === housingTypeSelect.value;
   }).filter(function (ad) {
-    return ad.offer.rooms === housingRooms[housingRoomsSelect.value];
+    return ad.offer.rooms === HOUSING_ROOMS[housingRoomsSelect.value];
   }).filter(function (ad) {
-    return ad.offer.guests === housingGuests[housingGuestsSelect.value];
+    return ad.offer.guests === HOUSING_GUESTS[housingGuestsSelect.value];
   });
 }
 
 
 window.similarAds.filter(function () {
-  return housingPrice[housingPriceSelect.value];
+  return HOUSING_PRICE[housingPriceSelect.value];
 });
 
