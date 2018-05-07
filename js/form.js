@@ -130,7 +130,7 @@ window.formValidation = (function () {
   function deactivateApp() {
     window.formValidation.adForm.classList.add('ad-form--disabled');
     window.map.map.classList.add('map--faded');
-    formAdressInput.value = '570, 320';
+    formAdressInput.value = '603, 462';
     for (s = 0; s < adFormFieldSet.length; s++) {
       adFormFieldSet[s].setAttribute('disabled', 'disabled');
     }

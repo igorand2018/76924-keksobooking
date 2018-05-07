@@ -54,7 +54,7 @@ window.pin = (function () {
     getPins: function (offersArray) {
       for (var i = 0; i < 5; i++) {
         var newPin = mapPin.cloneNode(true);
-        newPin.style.left = offersArray[i].location.x - (PIN_WINDTH / 2) + 'px';
+        newPin.style.left = offersArray[i].location.x - Math.ceil(PIN_WINDTH / 2) + 'px';
         newPin.style.top = offersArray[i].location.y - PIN_HEIGHT + 'px';
         newPin.querySelector('img').src = offersArray[i].author.avatar;
         newPin.querySelector('img').alt = offersArray[i].offer.title;
