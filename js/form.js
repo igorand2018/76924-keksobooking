@@ -14,7 +14,7 @@ window.formValidation = (function () {
   var resetButton = adForm.querySelector('.ad-form__reset');
   var formAdressInput = document.getElementById('address');
   var successMessage = document.querySelector('.success');
-  formAdressInput.value = '570, 320';
+  formAdressInput.value = '603, 462';
 
   for (var s = 0; s < adFormFieldSet.length; s++) {
     adFormFieldSet[s].setAttribute('disabled', 'disabled');

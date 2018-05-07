@@ -82,7 +82,7 @@ window.map = (function () {
       var limits = {
         top: map.offsetTop + TOP_OFFSET - startPin.offsetHeight,
         right: map.offsetWidth - startPin.offsetWidth,
-        bottom: BOTTOM_OFFSET - window.pin.PIN_HEIGTH,
+        bottom: BOTTOM_OFFSET - window.pin.PIN_HEIGHT,
         left: LEFT_OFFSET
       };
 
@@ -106,7 +106,7 @@ window.map = (function () {
       startPin.style.top = NEW_COORD.y + 'px';
       startPin.style.left = NEW_COORD.x + 'px';
 
-      window.formValidation.formAdressInput.value = ((startPin.offsetTop - shift.y) + window.pin.PIN_HEIGTH) + ', ' + Math.floor((startPin.offsetLeft - shift.x) + window.pin.PIN_WINDTH / 2);
+      window.formValidation.formAdressInput.value = currentX + Math.ceil(window.pin.PIN_WINDTH / 2) + ', ' + (currentY + window.pin.PIN_HEIGHT);
     };
 
     var onMouseUp = function (upEvt) {
