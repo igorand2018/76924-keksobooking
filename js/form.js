@@ -2,7 +2,7 @@
 'use strict';
 window.formValidation = (function () {
   var adForm = document.querySelector('.ad-form');
-  var adFormFieldSet = document.querySelectorAll('.ad-form__element');
+  var adFormFieldSet = adForm.getElementsByTagName('fieldset');
   var inputTitle = adForm.querySelector('#title');
   var typeSelect = adForm.querySelector('#type');
   var inputPrice = adForm.querySelector('#price');
