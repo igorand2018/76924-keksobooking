@@ -80,7 +80,7 @@ window.map = (function () {
       var currentX = (startPin.offsetLeft - shift.x);
 
       var limits = {
-        top: map.offsetTop + TOP_OFFSET - startPin.offsetHeight,
+        top: TOP_OFFSET - window.pin.PIN_HEIGHT,
         right: map.offsetWidth - startPin.offsetWidth,
         bottom: BOTTOM_OFFSET - window.pin.PIN_HEIGHT,
         left: LEFT_OFFSET
