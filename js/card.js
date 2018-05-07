@@ -9,10 +9,10 @@ window.card = (function () {
 
   var featuresFragment = document.createDocumentFragment();
 
-  function getOfferFeatures() {
-    for (var i = 0; i < window.similarAds[0].offer.features.length; i++) {
+  function getOfferFeatures(arrayElement) {
+    for (var i = 0; i < arrayElement.offer.features.length; i++) {
       var feature = document.createElement('li');
-      var popupFeatureCustom = 'popup__feature--' + window.similarAds[0].offer.features[i];
+      var popupFeatureCustom = 'popup__feature--' + arrayElement.offer.features[i];
       feature.classList.add('popup__feature', popupFeatureCustom);
 
       featuresFragment.appendChild(feature);
@@ -22,13 +22,13 @@ window.card = (function () {
 
   var photoFragment = document.createDocumentFragment();
 
-  function getofferPhotos() {
-    for (var i = 0; i < window.similarAds[0].offer.photos.length; i++) {
+  function getofferPhotos(arrayElement) {
+    for (var i = 0; i < arrayElement.offer.photos.length; i++) {
       var photo = document.createElement('img');
       photo.width = 45;
       photo.height = 40;
       photo.classList.add('popup__photo');
-      photo.src = window.similarAds[0].offer.photos[i];
+      photo.src = arrayElement.offer.photos[i];
       photoFragment.appendChild(photo);
     }
     return photoFragment;
@@ -43,10 +43,10 @@ window.card = (function () {
       newCard.querySelector('.popup__text--capacity').textContent = arrayElement.offer.rooms + ' комнаты для ' + arrayElement.offer.guests + ' гостей';
       newCard.querySelector('.popup__text--time').textContent = 'Заезд после ' + arrayElement.offer.checkin + ', выезд до ' + arrayElement.offer.checkout;
       newCard.querySelector('.popup__features').innerHTML = '';
-      newCard.querySelector('.popup__features').appendChild(getOfferFeatures());
+      newCard.querySelector('.popup__features').appendChild(getOfferFeatures(arrayElement));
       newCard.querySelector('.popup__description').textContent = arrayElement.offer.description;
       newCard.querySelector('.popup__photos').innerHTML = '';
-      newCard.querySelector('.popup__photos').appendChild(getofferPhotos());
+      newCard.querySelector('.popup__photos').appendChild(getofferPhotos(arrayElement));
       newCard.querySelector('.popup__avatar').src = arrayElement.author.avatar;
       window.map.map.insertBefore(newCard, mapFiltersContainer);
       newCard.querySelector('.popup__close').addEventListener('click', function () {
