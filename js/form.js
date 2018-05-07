@@ -138,6 +138,8 @@ window.formValidation = (function () {
       successMessage.classList.add('hidden');
     }, 3000);
     window.pin.removePins();
+    window.map.startPin.style.left = '570px';
+    window.map.startPin.style.top = '375px';
   }
 
   submitButton.addEventListener('click', function (evt) {
