@@ -14,7 +14,11 @@ window.formValidation = (function () {
   var resetButton = adForm.querySelector('.ad-form__reset');
   var formAdressInput = document.getElementById('address');
   var successMessage = document.querySelector('.success');
-  formAdressInput.value = '603, 462';
+  var startPinCoords = {
+    x: 570,
+    y: 375
+  };
+  formAdressInput.value = startPinCoords.x + Math.ceil(window.pin.PIN_WINDTH / 2) + ', ' + (startPinCoords.y + window.pin.PIN_HEIGHT);
 
   for (var s = 0; s < adFormFieldSet.length; s++) {
     adFormFieldSet[s].setAttribute('disabled', 'disabled');
@@ -138,8 +142,8 @@ window.formValidation = (function () {
       successMessage.classList.add('hidden');
     }, 3000);
     window.pin.removePins();
-    window.map.startPin.style.left = '570px';
-    window.map.startPin.style.top = '375px';
+    window.map.startPin.style.left = startPinCoords.x + 'px';
+    window.map.startPin.style.top = startPinCoords.y + 'px';
   }
 
   submitButton.addEventListener('click', function (evt) {
