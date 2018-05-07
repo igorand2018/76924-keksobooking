@@ -8,7 +8,9 @@ window.pin = (function () {
   var housingPriceSelect = document.querySelector('#housing-price');
   var housingRoomsSelect = document.querySelector('#housing-rooms');
   var housingGuestsSelect = document.querySelector('#housing-guests');
-  var mapPin = document.querySelector('.map__pin');
+  var mapPin = document.querySelector('template')
+      .content
+      .querySelector('.map__pin');
   var allMapPins = document.querySelectorAll('.map__pin');
   var mapPins = document.querySelector('.map__pins');
   var pinsFragment = document.createDocumentFragment();
