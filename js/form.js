@@ -131,8 +131,8 @@ window.formValidation = (function () {
     window.formValidation.adForm.classList.add('ad-form--disabled');
     window.map.map.classList.add('map--faded');
     formAdressInput.value = '570, 320';
-    for (s = 0; s < window.formValidation.adFormFieldSet.length; s++) {
-      window.formValidation.adFormFieldSet[s].removeAttribute('disabled');
+    for (s = 0; s < adFormFieldSet.length; s++) {
+      adFormFieldSet[s].setAttribute('disabled', 'disabled');
     }
     setTimeout(function () {
       successMessage.classList.add('hidden');

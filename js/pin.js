@@ -11,7 +11,6 @@ window.pin = (function () {
   var mapPin = document.querySelector('template')
       .content
       .querySelector('.map__pin');
-  var allMapPins = document.querySelectorAll('.map__pin');
   var mapPins = document.querySelector('.map__pins');
   var pinsFragment = document.createDocumentFragment();
 
@@ -70,7 +69,6 @@ window.pin = (function () {
         window.pin.mapPins.removeChild(oldPins[i]);
       }
     },
-    allMapPins: allMapPins,
     mapPins: mapPins,
     PIN_HEIGTH: PIN_HEIGTH,
     PIN_WINDTH: PIN_WINDTH
