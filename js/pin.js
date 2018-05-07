@@ -1,15 +1,16 @@
 'use strict';
 
 window.pin = (function () {
-  var PIN_HEIGTH = 87;
+  var PIN_HEIGHT = 87;
   var PIN_WINDTH = 65;
   var mapFiltersForm = document.querySelector('.map__filters');
   var housingTypeSelect = document.querySelector('#housing-type');
   var housingPriceSelect = document.querySelector('#housing-price');
   var housingRoomsSelect = document.querySelector('#housing-rooms');
   var housingGuestsSelect = document.querySelector('#housing-guests');
-  var mapPin = document.querySelector('.map__pin');
-  var allMapPins = document.querySelectorAll('.map__pin');
+  var mapPin = document.querySelector('template')
+      .content
+      .querySelector('.map__pin');
   var mapPins = document.querySelector('.map__pins');
   var pinsFragment = document.createDocumentFragment();
 
@@ -53,8 +54,8 @@ window.pin = (function () {
     getPins: function (offersArray) {
       for (var i = 0; i < 5; i++) {
         var newPin = mapPin.cloneNode(true);
-        newPin.style.top = offersArray[i].location.y - PIN_HEIGTH + 'px';
-        newPin.style.left = offersArray[i].location.x - (PIN_WINDTH / 2) + 'px';
+        newPin.style.left = offersArray[i].location.x - Math.ceil(PIN_WINDTH / 2) + 'px';
+        newPin.style.top = offersArray[i].location.y - PIN_HEIGHT + 'px';
         newPin.querySelector('img').src = offersArray[i].author.avatar;
         newPin.querySelector('img').alt = offersArray[i].offer.title;
         newPin.dataset.indexNumber = [i];
@@ -62,9 +63,14 @@ window.pin = (function () {
       }
       mapPins.appendChild(pinsFragment);
     },
-    allMapPins: allMapPins,
+    removePins: function () {
+      var oldPins = window.pin.mapPins.querySelectorAll('.map__pin');
+      for (var i = oldPins.length - 1; i >= 1; i--) {
+        window.pin.mapPins.removeChild(oldPins[i]);
+      }
+    },
     mapPins: mapPins,
-    PIN_HEIGTH: PIN_HEIGTH,
+    PIN_HEIGHT: PIN_HEIGHT,
     PIN_WINDTH: PIN_WINDTH
   };
 })();

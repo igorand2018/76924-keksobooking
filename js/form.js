@@ -2,7 +2,7 @@
 'use strict';
 window.formValidation = (function () {
   var adForm = document.querySelector('.ad-form');
-  var adFormFieldSet = document.querySelectorAll('.ad-form__element');
+  var adFormFieldSet = adForm.getElementsByTagName('fieldset');
   var inputTitle = adForm.querySelector('#title');
   var typeSelect = adForm.querySelector('#type');
   var inputPrice = adForm.querySelector('#price');
@@ -14,7 +14,7 @@ window.formValidation = (function () {
   var resetButton = adForm.querySelector('.ad-form__reset');
   var formAdressInput = document.getElementById('address');
   var successMessage = document.querySelector('.success');
-  formAdressInput.value = '570, 320';
+  formAdressInput.value = '603, 462';
 
   for (var s = 0; s < adFormFieldSet.length; s++) {
     adFormFieldSet[s].setAttribute('disabled', 'disabled');
@@ -130,9 +130,14 @@ window.formValidation = (function () {
   function deactivateApp() {
     window.formValidation.adForm.classList.add('ad-form--disabled');
     window.map.map.classList.add('map--faded');
-    for (s = 0; s < window.formValidation.adFormFieldSet.length; s++) {
-      window.formValidation.adFormFieldSet[s].removeAttribute('disabled');
+    formAdressInput.value = '603, 462';
+    for (s = 0; s < adFormFieldSet.length; s++) {
+      adFormFieldSet[s].setAttribute('disabled', 'disabled');
     }
+    setTimeout(function () {
+      successMessage.classList.add('hidden');
+    }, 3000);
+    window.pin.removePins();
   }
 
   submitButton.addEventListener('click', function (evt) {
@@ -141,7 +146,8 @@ window.formValidation = (function () {
       window.upload(new FormData(adForm), function () {
         successMessage.classList.remove('hidden');
         adForm.reset();
-        // setTimeout(successMessage.classList.add('hidden'), 50000);
+        deactivateApp();
+
       });
       evt.preventDefault();
     } else {
@@ -177,9 +183,8 @@ window.formValidation = (function () {
     adForm: adForm,
     adFormFieldSet: adFormFieldSet,
     formAdressInput: formAdressInput,
-
+    successMessage: successMessage
   };
-
 })();
 
 
