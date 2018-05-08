@@ -71,7 +71,8 @@ window.pin = (function () {
     },
     mapPins: mapPins,
     PIN_HEIGHT: PIN_HEIGHT,
-    PIN_WINDTH: PIN_WINDTH
+    PIN_WINDTH: PIN_WINDTH,
+    housingTypeSelect: housingTypeSelect,
   };
 })();
 

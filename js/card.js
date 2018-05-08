@@ -4,6 +4,7 @@ window.card = (function () {
   var mapCard = document.querySelector('template')
       .content
       .querySelector('.map__card');
+  // var addedCard = document.querySelector('.map__card .popup');
   var mapFiltersContainer = document.querySelector('.map__filters-container');
   var ESC_KEYCODE = 27;
 
@@ -33,6 +34,7 @@ window.card = (function () {
     }
     return photoFragment;
   }
+
   return {
     renderCard: function (arrayElement) {
       var newCard = mapCard.cloneNode(true);
@@ -49,20 +51,23 @@ window.card = (function () {
       newCard.querySelector('.popup__photos').appendChild(getofferPhotos(arrayElement));
       newCard.querySelector('.popup__avatar').src = arrayElement.author.avatar;
       window.map.map.insertBefore(newCard, mapFiltersContainer);
-      newCard.querySelector('.popup__close').addEventListener('click', function () {
-        window.map.map.removeChild(newCard);
-      });
+      document.addEventListener('keydown', onPopupEscPress);
+
+      function onPopupEscPress(evt) {
+        if (evt.keyCode === ESC_KEYCODE) {
+          closePopup();
+          document.removeEventListener('keydown', onPopupEscPress);
+        }
+      }
+
       function closePopup() {
         window.map.map.removeChild(newCard);
         document.removeEventListener('keydown', onPopupEscPress);
       }
-      function onPopupEscPress(evt) {
-        if (evt.keyCode === ESC_KEYCODE) {
-          closePopup();
-        }
-      }
 
-      document.addEventListener('keydown', onPopupEscPress);
+      newCard.querySelector('.popup__close').addEventListener('click', function () {
+        closePopup();
+      });
     },
     mapFiltersContainer: mapFiltersContainer
   };
