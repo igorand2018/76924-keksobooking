@@ -7,31 +7,14 @@ window.pin = (function () {
   var housingTypeSelect = document.querySelector('#housing-type');
   var housingPriceSelect = document.querySelector('#housing-price');
   var housingRoomsSelect = document.querySelector('#housing-rooms');
-  var housingGuestsSelect = document.querySelector('#housing-guests');
-
+  var housingCapacitySelect = document.querySelector('#housing-guests');
+  var MAX_PINS = 5;
   var filterWifi = mapFiltersForm.querySelector('#filter-wifi');
   // var filterDishwasher = mapFiltersForm.querySelector('#filter-dishwasher');
   // var filterParking = mapFiltersForm.querySelector('#filter-parking');
   // var filterWasher = mapFiltersForm.querySelector('#filter-washer');
   // var filterElevator = mapFiltersForm.querySelector('#filter-elevator');
   // var filterConditioner = mapFiltersForm.querySelector('#filter-conditioner');
-  var Room = {
-    'any': 0, // должно быть >= 0
-    '1': 1,
-    '2': 2,
-    '3': 3
-  };
-  var Price = {
-    'any': 'ad.offer.price > 0',
-    'low': 'ad.offer.price < 10000',
-    'middle': 'ad.offer.price > 10000',
-    'high': 'ad.offer.price > 50000'
-  };
-  var Guest = {
-    'any': 0, // должно быть >= 0
-    '1': 1,
-    '2': 2
-  };
 
   var mapPin = document.querySelector('template')
       .content
@@ -45,7 +28,7 @@ window.pin = (function () {
 
   return {
     getPins: function (offersArray) {
-      for (var i = 0; i < 5; i++) {
+      for (var i = 0; i < MAX_PINS; i++) {
         var newPin = mapPin.cloneNode(true);
         newPin.style.left = offersArray[i].location.x - Math.ceil(PIN_WINDTH / 2) + 'px';
         newPin.style.top = offersArray[i].location.y - PIN_HEIGHT + 'px';
@@ -65,16 +48,27 @@ window.pin = (function () {
     filterallSelects: function () {
       var filteredArray = window.similarAds.
           filter(function (ad) {
-            return ad.offer.type === window.pin.housingTypeSelect.value;
+            return (window.pin.housingTypeSelect.value === 'any' && ad.offer.type === 'flat' && ad.offer.type === 'house' && ad.offer.type === 'bungalo') ||
+            (window.pin.housingTypeSelect.value === 'flat' && ad.offer.type === 'flat') ||
+            (window.pin.housingTypeSelect.value === 'house' && ad.offer.type === 'house') ||
+            (window.pin.housingTypeSelect.value === 'bungalo' && ad.offer.type === 'bungalo');
           }).
           filter(function (ad) {
-            return ad.offer.guests === window.pin.Room[window.pin.housingRoomsSelect.value];
+            return (window.pin.housingPriceSelect.value === 'any' && ad.offer.price >= 0) ||
+                (window.pin.housingPriceSelect.value === 'low' && ad.offer.price >= 10000) ||
+                (window.pin.housingPriceSelect.value === 'high' && ad.offer.price >= 50000) ||
+                (window.pin.housingPriceSelect.value === 'middle' && (ad.offer.price >= 10000 && ad.offer.price <= 50000));
           }).
           filter(function (ad) {
-            return ad.offer.guests === window.pin.Guest[window.pin.housingGuestsSelect.value];
+            return (window.pin.housingRoomsSelect.value === 'any' && ad.offer.rooms > 0) ||
+                (window.pin.housingRoomsSelect.value === '1' && ad.offer.rooms === 1) ||
+                (window.pin.housingRoomsSelect.value === '2' && ad.offer.rooms === 2) ||
+                (window.pin.housingRoomsSelect.value === '3' && ad.offer.rooms === 3);
           }).
           filter(function (ad) {
-            return ad.offer.price === window.pin.Price[window.pin.housingPriceSelect.value];
+            return (window.pin.housingCapacitySelect.value === 'any' && ad.offer.guests > 0) ||
+                (window.pin.housingCapacitySelect.value === '1' && ad.offer.guests === 1) ||
+                (window.pin.housingCapacitySelect.value === '2' && ad.offer.guests === 2);
           });
 
       return filteredArray;
@@ -85,11 +79,8 @@ window.pin = (function () {
     housingTypeSelect: housingTypeSelect,
     housingPriceSelect: housingPriceSelect,
     housingRoomsSelect: housingRoomsSelect,
-    housingGuestsSelect: housingGuestsSelect,
-    Room: Room,
-    Guest: Guest,
+    housingCapacitySelect: housingCapacitySelect,
     filterWifi: filterWifi,
-    Price: Price
   };
 })();
 

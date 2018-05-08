@@ -164,7 +164,7 @@ window.formValidation = (function () {
       validateTitle();
       validatePrice();
       setCapacity();
-      window.formValidation.setInputPrice();
+      // window.formValidation.setInputPrice();
     }
   });
 
@@ -174,21 +174,21 @@ window.formValidation = (function () {
   });
 
   return {
-    setInputPrice: function (evt) {
-      var target = evt.target;
-      var selectValue = target.value;
-      var currentPrice = +inputPrice.value;
+    // setInputPrice: function (evt) {
+    //   var target = evt.target;
+    //   var selectValue = target.value;
+    //   var currentPrice = +inputPrice.value;
 
-      if (currentPrice < typeToPrice[selectValue]) {
-        inputPrice.min = typeToPrice[selectValue];
-        inputPrice.placeholder = 'от ' + typeToPrice[selectValue] + ' рублей';
-        inputPrice.setCustomValidity('Минимальная цена' + typeToPrice[selectValue]);
-        markInvalid(inputPrice);
-      } else {
-        inputPrice.setCustomValidity('');
-        markInvalid(inputPrice);
-      }
-    },
+    //   if (currentPrice < typeToPrice[selectValue]) {
+    //     inputPrice.min = typeToPrice[selectValue];
+    //     inputPrice.placeholder = 'от ' + typeToPrice[selectValue] + ' рублей';
+    //     inputPrice.setCustomValidity('Минимальная цена' + typeToPrice[selectValue]);
+    //     markInvalid(inputPrice);
+    //   } else {
+    //     inputPrice.setCustomValidity('');
+    //     markInvalid(inputPrice);
+    //   }
+    // },
     adForm: adForm,
     adFormFieldSet: adFormFieldSet,
     formAdressInput: formAdressInput,
