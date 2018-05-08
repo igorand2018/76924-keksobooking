@@ -19,6 +19,7 @@ window.map = (function () {
     evt.preventDefault();
     activateApp();
     window.load(window.pin.getPins, errorHandler);
+    startPin.removeEventListener('mouseup', onStartPinClick);
   }
 
   var errorHandler = function (errorMessage) {
