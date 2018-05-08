@@ -144,6 +144,7 @@ window.formValidation = (function () {
     window.pin.removePins();
     window.map.startPin.style.left = startPinCoords.x + 'px';
     window.map.startPin.style.top = startPinCoords.y + 'px';
+    window.map.startPin.addEventListener('mouseup', window.map.onStartPinClick);
   }
 
   submitButton.addEventListener('click', function (evt) {

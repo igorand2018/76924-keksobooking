@@ -87,25 +87,25 @@ window.map = (function () {
         left: LEFT_OFFSET
       };
 
-      var NEW_COORD = {
+      var newCoord = {
         x: limits.left,
         y: limits.top
       };
 
       if (currentX > limits.right) {
-        NEW_COORD.x = limits.right;
+        newCoord.x = limits.right;
       } else if (currentX > limits.left) {
-        NEW_COORD.x = currentX;
+        newCoord.x = currentX;
       }
 
       if (currentY > limits.bottom) {
-        NEW_COORD.y = limits.bottom;
+        newCoord.y = limits.bottom;
       } else if (currentY > limits.top) {
-        NEW_COORD.y = currentY;
+        newCoord.y = currentY;
       }
 
-      startPin.style.top = NEW_COORD.y + 'px';
-      startPin.style.left = NEW_COORD.x + 'px';
+      startPin.style.top = newCoord.y + 'px';
+      startPin.style.left = newCoord.x + 'px';
 
       window.formValidation.formAdressInput.value = currentX + Math.ceil(window.pin.PIN_WINDTH / 2) + ', ' + (currentY + window.pin.PIN_HEIGHT);
     };
@@ -122,7 +122,8 @@ window.map = (function () {
   });
   return {
     map: map,
-    startPin: startPin
+    startPin: startPin,
+    onStartPinClick: onStartPinClick
   };
 
 })();

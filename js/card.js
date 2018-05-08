@@ -51,25 +51,28 @@ window.card = (function () {
       newCard.querySelector('.popup__photos').appendChild(getofferPhotos(arrayElement));
       newCard.querySelector('.popup__avatar').src = arrayElement.author.avatar;
       window.map.map.insertBefore(newCard, mapFiltersContainer);
-      document.addEventListener('keydown', onPopupEscPress);
-
-      function onPopupEscPress(evt) {
-        if (evt.keyCode === ESC_KEYCODE) {
-          closePopup();
-          document.removeEventListener('keydown', onPopupEscPress);
-        }
-      }
-
-      function closePopup() {
-        window.map.map.removeChild(newCard);
-        document.removeEventListener('keydown', onPopupEscPress);
-      }
-
+      document.addEventListener('keydown', window.card.onPopupEscPress);
       newCard.querySelector('.popup__close').addEventListener('click', function () {
-        closePopup();
+        window.card.closePopup();
       });
     },
-    mapFiltersContainer: mapFiltersContainer
+    closePopup: function () {
+      window.card.removeNewCard();
+    },
+    onPopupEscPress: function (evt) {
+      if (evt.keyCode === ESC_KEYCODE) {
+        window.card.closePopup();
+        document.removeEventListener('keydown', window.card.onPopupEscPress);
+      }
+    },
+    removeNewCard: function () {
+      var card = document.querySelector('.map .map__card');
+      if (card) {
+        card.remove();
+      }
+      document.removeEventListener('keydown', window.card.onPopupEscPress);
+    },
+    mapFiltersContainer: mapFiltersContainer,
   };
 
 })();
