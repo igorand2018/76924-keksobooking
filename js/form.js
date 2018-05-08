@@ -14,11 +14,15 @@ window.formValidation = (function () {
   var resetButton = adForm.querySelector('.ad-form__reset');
   var formAdressInput = document.getElementById('address');
   var successMessage = document.querySelector('.success');
-  var startPinCoords = {
-    x: 570,
-    y: 375
+  var StartPinCoordinate = {
+    X: 570,
+    Y: 375
   };
-  formAdressInput.value = startPinCoords.x + Math.ceil(window.pin.PIN_WINDTH / 2) + ', ' + (startPinCoords.y + window.pin.PIN_HEIGHT);
+  var TitleLength = {
+    MIN: 2,
+    MAX: 30
+  };
+  formAdressInput.value = StartPinCoordinate.X + Math.ceil(window.pin.PIN_WINDTH / 2) + ', ' + (StartPinCoordinate.Y + window.pin.PIN_HEIGHT);
 
   for (var s = 0; s < adFormFieldSet.length; s++) {
     adFormFieldSet[s].setAttribute('disabled', 'disabled');
@@ -33,10 +37,10 @@ window.formValidation = (function () {
 
   inputTitle.addEventListener('input', function (evt) {
     var target = evt.target;
-    if (target.value.length < 2) {
+    if (target.value.length < TitleLength.MIN) {
       inputTitle.setCustomValidity('Минимальная длина заголовка — 30 символов');
       markInvalid(inputTitle);
-    } else if (target.value.length > 30) {
+    } else if (target.value.length > TitleLength.MAX) {
       inputTitle.setCustomValidity('');
       markValid(inputTitle);
     }
@@ -142,13 +146,12 @@ window.formValidation = (function () {
       successMessage.classList.add('hidden');
     }, 3000);
     window.pin.removePins();
-    window.map.startPin.style.left = startPinCoords.x + 'px';
-    window.map.startPin.style.top = startPinCoords.y + 'px';
+    window.map.startPin.style.left = StartPinCoordinate.X + 'px';
+    window.map.startPin.style.top = StartPinCoordinate.Y + 'px';
     window.map.startPin.addEventListener('mouseup', window.map.onStartPinClick);
   }
 
   submitButton.addEventListener('click', function (evt) {
-
     if (inputTitle.checkValidity() && inputPrice.checkValidity() && capacitySelect.checkValidity()) {
       window.upload(new FormData(adForm), function () {
         successMessage.classList.remove('hidden');
@@ -163,7 +166,6 @@ window.formValidation = (function () {
       setCapacity();
       window.formValidation.setInputPrice();
     }
-
   });
 
   resetButton.addEventListener('click', function () {

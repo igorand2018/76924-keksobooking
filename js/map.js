@@ -18,11 +18,11 @@ window.map = (function () {
   function onStartPinClick(evt) {
     evt.preventDefault();
     activateApp();
-    window.load(window.pin.getPins, errorHandler);
+    window.load(window.pin.getPins, onErrorMessage);
     startPin.removeEventListener('mouseup', onStartPinClick);
   }
 
-  var errorHandler = function (errorMessage) {
+  function onErrorMessage(errorMessage) {
     var errorBlock = document.createElement('div');
     errorBlock.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: #ffaa99;';
     errorBlock.style.position = 'absolute';
@@ -32,7 +32,7 @@ window.map = (function () {
 
     errorBlock.textContent = errorMessage;
     document.body.insertAdjacentElement('afterbegin', errorBlock);
-  };
+  }
 
 
   startPin.addEventListener('mouseup', onStartPinClick);
@@ -64,7 +64,7 @@ window.map = (function () {
       y: evt.clientY
     };
 
-    var onMouseMove = function (moveEvt) {
+    function onMouseMove(moveEvt) {
       moveEvt.preventDefault();
 
       var shift = {
@@ -108,13 +108,13 @@ window.map = (function () {
       startPin.style.left = newCoord.x + 'px';
 
       window.formValidation.formAdressInput.value = currentX + Math.ceil(window.pin.PIN_WINDTH / 2) + ', ' + (currentY + window.pin.PIN_HEIGHT);
-    };
+    }
 
-    var onMouseUp = function (upEvt) {
+    function onMouseUp(upEvt) {
       upEvt.preventDefault();
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
-    };
+    }
 
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);

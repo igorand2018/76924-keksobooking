@@ -4,8 +4,8 @@ window.card = (function () {
   var mapCard = document.querySelector('template')
       .content
       .querySelector('.map__card');
-  // var addedCard = document.querySelector('.map__card .popup');
   var mapFiltersContainer = document.querySelector('.map__filters-container');
+  var photoFragment = document.createDocumentFragment();
   var ESC_KEYCODE = 27;
 
   var featuresFragment = document.createDocumentFragment();
@@ -20,8 +20,6 @@ window.card = (function () {
     }
     return featuresFragment;
   }
-
-  var photoFragment = document.createDocumentFragment();
 
   function getofferPhotos(arrayElement) {
     for (var i = 0; i < arrayElement.offer.photos.length; i++) {

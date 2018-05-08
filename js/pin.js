@@ -15,6 +15,23 @@ window.pin = (function () {
   // var filterWasher = mapFiltersForm.querySelector('#filter-washer');
   // var filterElevator = mapFiltersForm.querySelector('#filter-elevator');
   // var filterConditioner = mapFiltersForm.querySelector('#filter-conditioner');
+  var Room = {
+    'any': 0, // должно быть >= 0
+    '1': 1,
+    '2': 2,
+    '3': 3
+  };
+  var Price = {
+    'any': 'ad.offer.price > 0',
+    'low': 'ad.offer.price < 10000',
+    'middle': 'ad.offer.price > 10000',
+    'high': 'ad.offer.price > 50000'
+  };
+  var Guest = {
+    'any': 0, // должно быть >= 0
+    '1': 1,
+    '2': 2
+  };
 
   var mapPin = document.querySelector('template')
       .content
@@ -25,29 +42,6 @@ window.pin = (function () {
   mapFiltersForm.addEventListener('change', function () {
     window.pin.filterallSelects();
   });
-
-  var HOUSING_PRICE = {
-    'any': 'ad.offer.price > 0',
-    'low': 'ad.offer.price < 10000',
-    'middle': 'ad.offer.price > 10000',
-    'high': 'ad.offer.price > 50000'
-  };
-  // window.similarAds.
-  // filter(function (ad) {
-  //   return window.pin.HOUSING_PRICE[window.pin.housingPriceSelect.value];
-  // });
-  var HOUSING_ROOMS = {
-    'any': 0,
-    '1': 1,
-    '2': 2,
-    '3': 3
-  };
-
-  var HOUSING_GUESTS = {
-    'any': 0, // должно быть >= 0
-    '1': 1,
-    '2': 2
-  };
 
   return {
     getPins: function (offersArray) {
@@ -74,10 +68,13 @@ window.pin = (function () {
             return ad.offer.type === window.pin.housingTypeSelect.value;
           }).
           filter(function (ad) {
-            return ad.offer.guests === HOUSING_ROOMS[window.pin.housingRoomsSelect.value];
+            return ad.offer.guests === window.pin.Room[window.pin.housingRoomsSelect.value];
           }).
           filter(function (ad) {
-            return ad.offer.guests === HOUSING_GUESTS[window.pin.housingGuestsSelect.value];
+            return ad.offer.guests === window.pin.Guest[window.pin.housingGuestsSelect.value];
+          }).
+          filter(function (ad) {
+            return ad.offer.price === window.pin.Price[window.pin.housingPriceSelect.value];
           });
 
       return filteredArray;
@@ -89,9 +86,10 @@ window.pin = (function () {
     housingPriceSelect: housingPriceSelect,
     housingRoomsSelect: housingRoomsSelect,
     housingGuestsSelect: housingGuestsSelect,
-    HOUSING_ROOMS: HOUSING_ROOMS,
+    Room: Room,
+    Guest: Guest,
     filterWifi: filterWifi,
-    HOUSING_PRICE: HOUSING_PRICE
+    Price: Price
   };
 })();
 
