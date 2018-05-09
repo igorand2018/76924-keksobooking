@@ -13,6 +13,7 @@ window.map = (function () {
     for (var s = 0; s < window.formValidation.adFormFieldSet.length; s++) {
       window.formValidation.adFormFieldSet[s].removeAttribute('disabled');
     }
+    window.pin.enableMapFilters();
   }
 
   function onStartPinClick(evt) {

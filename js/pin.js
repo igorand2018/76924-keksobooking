@@ -5,6 +5,8 @@ window.pin = (function () {
   var PIN_WINDTH = 65;
   var MAX_PINS = 5;
   var mapFiltersForm = document.querySelector('.map__filters');
+  var mapFiltersFormFieldSet = mapFiltersForm.getElementsByTagName('fieldset');
+  var mapFiltersFormSelects = mapFiltersForm.getElementsByTagName('select');
   var housingTypeSelect = document.querySelector('#housing-type');
   var housingPriceSelect = document.querySelector('#housing-price');
   var housingRoomsSelect = document.querySelector('#housing-rooms');
@@ -22,6 +24,26 @@ window.pin = (function () {
       .querySelector('.map__pin');
   var mapPins = document.querySelector('.map__pins');
   var pinsFragment = document.createDocumentFragment();
+
+  function disableMapFilters() {
+    for (var s = 0; s < mapFiltersFormFieldSet.length; s++) {
+      mapFiltersFormFieldSet[s].setAttribute('disabled', 'disabled');
+    }
+    for (s = 0; s < mapFiltersFormSelects.length; s++) {
+      mapFiltersFormSelects[s].setAttribute('disabled', 'disabled');
+    }
+  }
+
+  function enableMapFilters() {
+    for (var s = 0; s < mapFiltersFormFieldSet.length; s++) {
+      mapFiltersFormFieldSet[s].removeAttribute('disabled', 'disabled');
+    }
+    for (s = 0; s < mapFiltersFormSelects.length; s++) {
+      mapFiltersFormSelects[s].removeAttribute('disabled', 'disabled');
+    }
+  }
+
+  disableMapFilters();
 
   mapFiltersForm.addEventListener('change', function () {
     window.pin.filterallSelects();
@@ -97,6 +119,7 @@ window.pin = (function () {
     mapPins: mapPins,
     PIN_HEIGHT: PIN_HEIGHT,
     PIN_WINDTH: PIN_WINDTH,
+    mapFiltersForm: mapFiltersForm,
     housingTypeSelect: housingTypeSelect,
     housingPriceSelect: housingPriceSelect,
     housingRoomsSelect: housingRoomsSelect,
@@ -107,6 +130,8 @@ window.pin = (function () {
     filterWasher: filterWasher,
     filterElevator: filterElevator,
     filterConditioner: filterConditioner,
+    disableMapFilters: disableMapFilters,
+    enableMapFilters: enableMapFilters
   };
 })();
 

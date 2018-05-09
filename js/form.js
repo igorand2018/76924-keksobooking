@@ -146,6 +146,7 @@ window.formValidation = (function () {
       successMessage.classList.add('hidden');
     }, 3000);
     window.pin.removePins();
+    window.pin.disableMapFilters();
     window.map.startPin.style.left = StartPinCoordinate.X + 'px';
     window.map.startPin.style.top = StartPinCoordinate.Y + 'px';
     window.map.startPin.addEventListener('mouseup', window.map.onStartPinClick);
