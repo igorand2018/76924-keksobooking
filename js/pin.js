@@ -31,6 +31,7 @@ window.pin = (function () {
     } else {
       window.pin.getPins(window.pin.filteredArray);
     }
+    window.card.closePopup();
   });
 
   return {
