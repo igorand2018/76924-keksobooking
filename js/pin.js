@@ -16,6 +16,7 @@ window.pin = (function () {
   var filterElevator = mapFiltersForm.querySelector('#filter-elevator');
   var filterConditioner = mapFiltersForm.querySelector('#filter-conditioner');
 
+
   var mapPin = document.querySelector('template')
       .content
       .querySelector('.map__pin');
@@ -53,7 +54,8 @@ window.pin = (function () {
       }
     },
     filterallSelects: function () {
-      var filteredArray = window.similarAds.
+      var filteredAdsArray = window.similarAds.slice();
+      var filteredArray = filteredAdsArray.
           filter(function (ad) {
             switch (window.pin.housingTypeSelect.value) {
               case 'any': return true;
@@ -90,6 +92,7 @@ window.pin = (function () {
             return true;
           });
       window.pin.filteredArray = filteredArray;
+      window.pin.filteredAdsArray = filteredAdsArray;
       return filteredArray;
     },
     mapPins: mapPins,
@@ -104,8 +107,7 @@ window.pin = (function () {
     filterParking: filterParking,
     filterWasher: filterWasher,
     filterElevator: filterElevator,
-    filterConditioner: filterConditioner
-
+    filterConditioner: filterConditioner,
   };
 })();
 
