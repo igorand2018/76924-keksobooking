@@ -3,12 +3,12 @@
 window.pin = (function () {
   var PIN_HEIGHT = 87;
   var PIN_WINDTH = 65;
+  var MAX_PINS = 5;
   var mapFiltersForm = document.querySelector('.map__filters');
   var housingTypeSelect = document.querySelector('#housing-type');
   var housingPriceSelect = document.querySelector('#housing-price');
   var housingRoomsSelect = document.querySelector('#housing-rooms');
   var housingCapacitySelect = document.querySelector('#housing-guests');
-  var MAX_PINS = 5;
   var filterWifi = mapFiltersForm.querySelector('#filter-wifi');
   var filterDishwasher = mapFiltersForm.querySelector('#filter-dishwasher');
   var filterParking = mapFiltersForm.querySelector('#filter-parking');
@@ -24,12 +24,18 @@ window.pin = (function () {
 
   mapFiltersForm.addEventListener('change', function () {
     window.pin.filterallSelects();
-    // window.pin.getPins(window.pin.filterallSelects());
+    if (window.pin.mapPins.querySelectorAll('.map__pin').length > 1) {
+      window.pin.removePins();
+      window.pin.getPins(window.pin.filteredArray);
+    } else {
+      window.pin.getPins(window.pin.filteredArray);
+    }
   });
 
   return {
     getPins: function (offersArray) {
-      for (var i = 0; i < MAX_PINS; i++) {
+      var lengthLimit = (offersArray.length > MAX_PINS) ? MAX_PINS : offersArray.length;
+      for (var i = 0; i < lengthLimit; i++) {
         var newPin = mapPin.cloneNode(true);
         newPin.style.left = offersArray[i].location.x - Math.ceil(PIN_WINDTH / 2) + 'px';
         newPin.style.top = offersArray[i].location.y - PIN_HEIGHT + 'px';
@@ -49,38 +55,41 @@ window.pin = (function () {
     filterallSelects: function () {
       var filteredArray = window.similarAds.
           filter(function (ad) {
-            return (window.pin.housingTypeSelect.value === 'any' && ad.offer.type === 'flat'
-            && ad.offer.type === 'house' && ad.offer.type === 'bungalo') ||
-            (window.pin.housingTypeSelect.value === 'flat' && ad.offer.type === 'flat') ||
-            (window.pin.housingTypeSelect.value === 'house' && ad.offer.type === 'house') ||
-            (window.pin.housingTypeSelect.value === 'bungalo' && ad.offer.type === 'bungalo');
+            switch (window.pin.housingTypeSelect.value) {
+              case 'any': return true;
+              default: return window.pin.housingTypeSelect.value === ad.offer.type;
+            }
           }).
           filter(function (ad) {
             return (window.pin.housingPriceSelect.value === 'any' && ad.offer.price >= 0) ||
-                (window.pin.housingPriceSelect.value === 'low' && ad.offer.price >= 10000) ||
+                (window.pin.housingPriceSelect.value === 'low' && ad.offer.price <= 10000) ||
                 (window.pin.housingPriceSelect.value === 'high' && ad.offer.price >= 50000) ||
                 (window.pin.housingPriceSelect.value === 'middle' && (ad.offer.price >= 10000 && ad.offer.price <= 50000));
           }).
           filter(function (ad) {
-            return (window.pin.housingRoomsSelect.value === 'any' && ad.offer.rooms > 0) ||
+            return (window.pin.housingRoomsSelect.value === 'any' && ad.offer.rooms >= 0) ||
                 (window.pin.housingRoomsSelect.value === '1' && ad.offer.rooms === 1) ||
                 (window.pin.housingRoomsSelect.value === '2' && ad.offer.rooms === 2) ||
                 (window.pin.housingRoomsSelect.value === '3' && ad.offer.rooms === 3);
           }).
           filter(function (ad) {
-            return (window.pin.housingCapacitySelect.value === 'any' && ad.offer.guests > 0) ||
+            return (window.pin.housingCapacitySelect.value === 'any' && ad.offer.guests >= 0) ||
                 (window.pin.housingCapacitySelect.value === '1' && ad.offer.guests === 1) ||
                 (window.pin.housingCapacitySelect.value === '2' && ad.offer.guests === 2);
           }).
           filter(function (ad) {
-            return (window.pin.filterWifi.checked && ad.offer.features.indexOf('wifi')) ||
-                (window.pin.filterDishwasher.checked && ad.offer.features.indexOf('dishwasher')) ||
-                (window.pin.filterParking.checked && ad.offer.features.indexOf('parking')) ||
-                (window.pin.filterWasher.checked && ad.offer.features.indexOf('washer')) ||
-                (window.pin.filterElevator.checked && ad.offer.features.indexOf('elevator')) ||
-                (window.pin.filterConditioner.checked && ad.offer.features.indexOf('conditioner'));
-          });
 
+            var checked = document.querySelectorAll('input[type="checkbox"]:checked');
+
+            for (var i = 0; i < checked.length; i++) {
+              var element = checked[i];
+              if (ad.offer.features.indexOf(element.value) === -1) {
+                return false;
+              }
+            }
+            return true;
+          });
+      window.pin.filteredArray = filteredArray;
       return filteredArray;
     },
     mapPins: mapPins,
