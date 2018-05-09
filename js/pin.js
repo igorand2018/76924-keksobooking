@@ -54,8 +54,7 @@ window.pin = (function () {
       }
     },
     filterallSelects: function () {
-      var filteredAdsArray = window.similarAds.slice();
-      var filteredArray = filteredAdsArray.
+      var filteredArray = window.similarAds.
           filter(function (ad) {
             switch (window.pin.housingTypeSelect.value) {
               case 'any': return true;
@@ -92,7 +91,6 @@ window.pin = (function () {
             return true;
           });
       window.pin.filteredArray = filteredArray;
-      window.pin.filteredAdsArray = filteredAdsArray;
       return filteredArray;
     },
     mapPins: mapPins,

@@ -50,8 +50,7 @@ window.map = (function () {
       if (target.matches('.map__pin') && target !== startPin) {
         var currentPinIndex = target.getAttribute('data-index-number');
         removePreviousCard();
-        window.card.renderCard(window.pin.filteredAdsArray[currentPinIndex]);
-        // window.card.renderCard(window.pin.filteredArray[currentPinIndex]);
+        window.card.renderCard(window.pin.filteredArray[currentPinIndex]);
         break;
       }
       target = target.parentElement;

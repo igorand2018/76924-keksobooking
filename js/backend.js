@@ -25,6 +25,7 @@
     xhr.addEventListener('load', function () {
       if (xhr.status === 200) {
         window.similarAds = xhr.response;
+        window.pin.filteredArray = window.similarAds.slice();
         onLoad(xhr.response);
 
       } else {
