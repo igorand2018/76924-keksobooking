@@ -45,7 +45,7 @@ window.pin = (function () {
 
   disableMapFilters();
 
-  mapFiltersForm.addEventListener('change', function () {
+  function onChange() {
     window.pin.filterallSelects();
     if (window.pin.mapPins.querySelectorAll('.map__pin').length > 1) {
       window.pin.removePins();
@@ -54,7 +54,10 @@ window.pin = (function () {
       window.pin.getPins(window.pin.filteredArray);
     }
     window.card.closePopup();
-  });
+
+  }
+
+  mapFiltersForm.addEventListener('change', window.debounce(onChange));
 
   return {
     getPins: function (offersArray) {
