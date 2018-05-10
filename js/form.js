@@ -12,7 +12,7 @@ window.formValidation = (function () {
   var capacitySelect = adForm.querySelector('#capacity');
   var submitButton = adForm.querySelector('.ad-form__submit');
   var resetButton = adForm.querySelector('.ad-form__reset');
-  var formAdressInput = document.getElementById('address');
+  var formAdressInput = adForm.querySelector('#address');
   var successMessage = document.querySelector('.success');
   var StartPinCoordinate = {
     X: 570,

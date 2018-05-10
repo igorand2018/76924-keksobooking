@@ -2,7 +2,7 @@
 
 window.map = (function () {
   var map = document.querySelector('.map');
-  var startPin = document.querySelector('.map__pins .map__pin:first-of-type');
+  var startPin = map.querySelector('.map__pins .map__pin:first-of-type');
   var TOP_OFFSET = 150;
   var LEFT_OFFSET = 0;
   var BOTTOM_OFFSET = 500;
