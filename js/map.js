@@ -19,7 +19,7 @@ window.map = (function () {
   function onStartPinClick(evt) {
     evt.preventDefault();
     activateApp();
-    window.load(window.pin.getPins, onErrorMessage);
+    window.backend.load(window.pin.getPins, onErrorMessage);
     startPin.removeEventListener('mouseup', onStartPinClick);
   }
 

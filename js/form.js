@@ -154,7 +154,7 @@ window.formValidation = (function () {
 
   submitButton.addEventListener('click', function (evt) {
     if (inputTitle.checkValidity() && inputPrice.checkValidity() && capacitySelect.checkValidity()) {
-      window.upload(new FormData(adForm), function () {
+      window.backend.upload(new FormData(adForm), function () {
         successMessage.classList.remove('hidden');
         adForm.reset();
         deactivateApp();
