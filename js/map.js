@@ -105,8 +105,16 @@ window.map = (function () {
         newCoord.y = currentY;
       }
 
-      startPin.style.top = newCoord.y + 'px';
-      startPin.style.left = newCoord.x + 'px';
+      // newCoord.x = (currentX > limits.right) ? (newCoord.x = limits.right) : false ||
+      // (currentX > limits.left) ? (newCoord.x = currentX) : false;
+
+      // newCoord.y = (currentY > limits.bottom) ? (newCoord.y = limits.bottom) : false ||
+      // (currentY > limits.top) ? (newCoord.y = currentY) : false;
+
+
+      // startPin.style.top = newCoord.y + 'px';
+      // startPin.style.left = newCoord.x + 'px';
+      startPin.setAttribute('style', 'left: ' + newCoord.x + 'px' + '; ' + 'top: ' + newCoord.y + 'px' + ';');
 
       window.formValidation.formAdressInput.value = currentX + Math.ceil(window.pin.PIN_WINDTH / 2) + ', ' + (currentY + window.pin.PIN_HEIGHT);
     }
