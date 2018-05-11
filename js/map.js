@@ -1,17 +1,17 @@
 'use strict';
 
 window.map = (function () {
-  var map = document.querySelector('.map');
-  var startPin = map.querySelector('.map__pins .map__pin:first-of-type');
+  var offersArea = document.querySelector('.map');
+  var startPin = offersArea.querySelector('.map__pins .map__pin:first-of-type');
   var TOP_OFFSET = 150;
   var LEFT_OFFSET = 0;
   var BOTTOM_OFFSET = 500;
 
   function activateApp() {
-    window.formValidation.adForm.classList.remove('ad-form--disabled');
-    map.classList.remove('map--faded');
-    for (var s = 0; s < window.formValidation.adFormFieldSet.length; s++) {
-      window.formValidation.adFormFieldSet[s].removeAttribute('disabled');
+    window.advert.applicationForm.classList.remove('ad-form--disabled');
+    offersArea.classList.remove('map--faded');
+    for (var s = 0; s < window.advert.applicationFormFieldSet.length; s++) {
+      window.advert.applicationFormFieldSet[s].removeAttribute('disabled');
     }
     window.pin.enableMapFilters();
   }
@@ -19,18 +19,13 @@ window.map = (function () {
   function onStartPinClick(evt) {
     evt.preventDefault();
     activateApp();
-    window.backend.load(window.pin.getPins, onErrorMessage);
+    window.backend.load(window.pin.getData, onErrorMessage);
     startPin.removeEventListener('mouseup', onStartPinClick);
   }
 
   function onErrorMessage(errorMessage) {
     var errorBlock = document.createElement('div');
-    errorBlock.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: #ffaa99;';
-    errorBlock.style.position = 'absolute';
-    errorBlock.style.left = 0;
-    errorBlock.style.right = 0;
-    errorBlock.style.fontSize = '25px';
-
+    errorBlock.setAttribute('style', 'z-index: 100; margin: 0 auto; text-align: center; background-color: #ffaa99; position: absolute; left: 0; right: 0; fontsize: 25px;');
     errorBlock.textContent = errorMessage;
     document.body.insertAdjacentElement('afterbegin', errorBlock);
   }
@@ -41,17 +36,17 @@ window.map = (function () {
   function removePreviousCard() {
     var previousCard = document.querySelector('.popup');
     if (previousCard) {
-      map.removeChild(previousCard);
+      offersArea.removeChild(previousCard);
     }
   }
 
-  window.pin.mapPins.addEventListener('click', function (evt) {
+  window.pin.mapData.addEventListener('click', function (evt) {
     var target = evt.target;
-    while (target !== window.pin.mapPins) {
+    while (target !== window.pin.mapData) {
       if (target.matches('.map__pin') && target !== startPin) {
         var currentPinIndex = target.getAttribute('data-index-number');
         removePreviousCard();
-        window.card.renderCard(window.pin.filteredArray[currentPinIndex]);
+        window.card.getOfferDescription(window.pin.filteredArray[currentPinIndex]);
         break;
       }
       target = target.parentElement;
@@ -82,9 +77,9 @@ window.map = (function () {
       var currentX = (startPin.offsetLeft - shift.x);
 
       var limits = {
-        top: TOP_OFFSET - window.pin.PIN_HEIGHT,
-        right: map.offsetWidth - startPin.offsetWidth,
-        bottom: BOTTOM_OFFSET - window.pin.PIN_HEIGHT,
+        top: TOP_OFFSET - window.pin.HEIGHT,
+        right: offersArea.offsetWidth - startPin.offsetWidth,
+        bottom: BOTTOM_OFFSET - window.pin.HEIGHT,
         left: LEFT_OFFSET
       };
 
@@ -111,12 +106,9 @@ window.map = (function () {
       // newCoord.y = (currentY > limits.bottom) ? (newCoord.y = limits.bottom) : false ||
       // (currentY > limits.top) ? (newCoord.y = currentY) : false;
 
+      startPin.setAttribute('style', 'left: ' + newCoord.x + 'px; ' + 'top: ' + newCoord.y + 'px;');
 
-      // startPin.style.top = newCoord.y + 'px';
-      // startPin.style.left = newCoord.x + 'px';
-      startPin.setAttribute('style', 'left: ' + newCoord.x + 'px' + '; ' + 'top: ' + newCoord.y + 'px' + ';');
-
-      window.formValidation.formAdressInput.value = currentX + Math.ceil(window.pin.PIN_WINDTH / 2) + ', ' + (currentY + window.pin.PIN_HEIGHT);
+      window.advert.formAdressInput.value = currentX + Math.ceil(window.pin.WIDTH / 2) + ', ' + (currentY + window.pin.HEIGHT);
     }
 
     function onMouseUp(upEvt) {
@@ -130,7 +122,7 @@ window.map = (function () {
 
   });
   return {
-    map: map,
+    offersArea: offersArea,
     startPin: startPin,
     onStartPinClick: onStartPinClick
   };

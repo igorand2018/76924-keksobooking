@@ -24,17 +24,17 @@ window.card = (function () {
   function getofferPhotos(arrayElement) {
     for (var i = 0; i < arrayElement.offer.photos.length; i++) {
       var photo = document.createElement('img');
-      photo.width = 45;
-      photo.height = 40;
+      photo.setAttribute('width', '45');
+      photo.setAttribute('height', '40');
       photo.classList.add('popup__photo');
-      photo.src = arrayElement.offer.photos[i];
+      photo.setAttribute('src', arrayElement.offer.photos[i]);
       photoFragment.appendChild(photo);
     }
     return photoFragment;
   }
 
   return {
-    renderCard: function (arrayElement) {
+    getOfferDescription: function (arrayElement) {
       var newCard = mapCard.cloneNode(true);
       newCard.querySelector('.popup__title').textContent = arrayElement.offer.title;
       newCard.querySelector('.popup__text--address').textContent = arrayElement.offer.address;
@@ -47,15 +47,15 @@ window.card = (function () {
       newCard.querySelector('.popup__description').textContent = arrayElement.offer.description;
       newCard.querySelector('.popup__photos').innerHTML = '';
       newCard.querySelector('.popup__photos').appendChild(getofferPhotos(arrayElement));
-      newCard.querySelector('.popup__avatar').src = arrayElement.author.avatar;
-      window.map.map.insertBefore(newCard, mapFiltersContainer);
+      newCard.querySelector('.popup__avatar').setAttribute('src', arrayElement.author.avatar);
+      window.map.offersArea.insertBefore(newCard, mapFiltersContainer);
       document.addEventListener('keydown', window.card.onPopupEscPress);
       newCard.querySelector('.popup__close').addEventListener('click', function () {
         window.card.closePopup();
       });
     },
     closePopup: function () {
-      window.card.removeNewCard();
+      window.card.removeOfferDescription();
     },
     onPopupEscPress: function (evt) {
       if (evt.keyCode === ESC_KEYCODE) {
@@ -63,7 +63,7 @@ window.card = (function () {
         document.removeEventListener('keydown', window.card.onPopupEscPress);
       }
     },
-    removeNewCard: function () {
+    removeOfferDescription: function () {
       var card = document.querySelector('.map .map__card');
       if (card) {
         card.remove();

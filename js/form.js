@@ -1,18 +1,18 @@
 
 'use strict';
-window.formValidation = (function () {
-  var adForm = document.querySelector('.ad-form');
-  var adFormFieldSet = adForm.getElementsByTagName('fieldset');
-  var inputTitle = adForm.querySelector('#title');
-  var typeSelect = adForm.querySelector('#type');
-  var inputPrice = adForm.querySelector('#price');
-  var timeinSelection = adForm.querySelector('#timein');
-  var timeoutSelection = adForm.querySelector('#timeout');
-  var roomNumberSelect = adForm.querySelector('#room_number');
-  var capacitySelect = adForm.querySelector('#capacity');
-  var submitButton = adForm.querySelector('.ad-form__submit');
-  var resetButton = adForm.querySelector('.ad-form__reset');
-  var formAdressInput = adForm.querySelector('#address');
+window.advert = (function () {
+  var applicationForm = document.querySelector('.ad-form');
+  var applicationFormFieldSet = applicationForm.getElementsByTagName('fieldset');
+  var inputTitle = applicationForm.querySelector('#title');
+  var typeSelect = applicationForm.querySelector('#type');
+  var inputPrice = applicationForm.querySelector('#price');
+  var timeinSelection = applicationForm.querySelector('#timein');
+  var timeoutSelection = applicationForm.querySelector('#timeout');
+  var roomNumberSelect = applicationForm.querySelector('#room_number');
+  var capacitySelect = applicationForm.querySelector('#capacity');
+  var submitButton = applicationForm.querySelector('.ad-form__submit');
+  var resetButton = applicationForm.querySelector('.ad-form__reset');
+  var formAdressInput = applicationForm.querySelector('#address');
   var successMessage = document.querySelector('.success');
   var StartPinCoordinate = {
     X: 570,
@@ -22,16 +22,16 @@ window.formValidation = (function () {
     MIN: 2,
     MAX: 30
   };
-  formAdressInput.value = StartPinCoordinate.X + Math.ceil(window.pin.PIN_WINDTH / 2) + ', ' + (StartPinCoordinate.Y + window.pin.PIN_HEIGHT);
+  formAdressInput.value = StartPinCoordinate.X + Math.ceil(window.pin.WIDTH / 2) + ', ' + (StartPinCoordinate.Y + window.pin.HEIGHT);
 
-  for (var s = 0; s < adFormFieldSet.length; s++) {
-    adFormFieldSet[s].setAttribute('disabled', 'disabled');
+  for (var s = 0; s < applicationFormFieldSet.length; s++) {
+    applicationFormFieldSet[s].setAttribute('disabled', 'disabled');
   }
   function markValid(inputName) {
-    inputName.style.outline = 'inherit';
+    inputName.setAttribute('style', 'outline: inherit;');
   }
   function markInvalid(inputName) {
-    inputName.style.outline = '1px solid #ffaa99';
+    inputName.setAttribute('style', 'outline: 1px solid #ffaa99;');
   }
 
 
@@ -136,27 +136,26 @@ window.formValidation = (function () {
   });
 
   function deactivateApp() {
-    window.formValidation.adForm.classList.add('ad-form--disabled');
-    window.map.map.classList.add('map--faded');
+    window.advert.applicationForm.classList.add('ad-form--disabled');
+    window.map.offersArea.classList.add('map--faded');
     formAdressInput.value = '603, 462';
-    for (s = 0; s < adFormFieldSet.length; s++) {
-      adFormFieldSet[s].setAttribute('disabled', 'disabled');
+    for (s = 0; s < applicationFormFieldSet.length; s++) {
+      applicationFormFieldSet[s].setAttribute('disabled', 'disabled');
     }
     setTimeout(function () {
       successMessage.classList.add('hidden');
     }, 3000);
-    window.pin.removePins();
+    window.pin.removeData();
     window.pin.disableMapFilters();
-    window.map.startPin.style.left = StartPinCoordinate.X + 'px';
-    window.map.startPin.style.top = StartPinCoordinate.Y + 'px';
+    window.map.startPin.setAttribute('style', 'left: ' + StartPinCoordinate.X + 'px; ' + 'top: ' + StartPinCoordinate.Y + 'px;');
     window.map.startPin.addEventListener('mouseup', window.map.onStartPinClick);
   }
 
   submitButton.addEventListener('click', function (evt) {
     if (inputTitle.checkValidity() && inputPrice.checkValidity() && capacitySelect.checkValidity()) {
-      window.backend.upload(new FormData(adForm), function () {
+      window.backend.upload(new FormData(applicationForm), function () {
         successMessage.classList.remove('hidden');
-        adForm.reset();
+        applicationForm.reset();
         deactivateApp();
 
       });
@@ -169,13 +168,13 @@ window.formValidation = (function () {
   });
 
   resetButton.addEventListener('click', function () {
-    adForm.reset();
+    applicationForm.reset();
     deactivateApp();
   });
 
   return {
-    adForm: adForm,
-    adFormFieldSet: adFormFieldSet,
+    applicationForm: applicationForm,
+    applicationFormFieldSet: applicationFormFieldSet,
     formAdressInput: formAdressInput,
     successMessage: successMessage
   };
