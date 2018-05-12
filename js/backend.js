@@ -5,7 +5,6 @@ window.backend = (function () {
     upload: function (data, onLoad, onError) {
       var xhr = new XMLHttpRequest();
       xhr.responseType = 'json';
-
       xhr.addEventListener('load', function () {
         if (xhr.status === 200) {
           onLoad(xhr.response);
@@ -20,7 +19,6 @@ window.backend = (function () {
     load: function (onLoad, onError) {
       var xhr = new XMLHttpRequest();
       xhr.responseType = 'json';
-
       xhr.addEventListener('load', function () {
         if (xhr.status === 200) {
           window.similarAds = xhr.response;

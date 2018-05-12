@@ -100,12 +100,6 @@ window.map = (function () {
         newCoord.y = currentY;
       }
 
-      // newCoord.x = (currentX > limits.right) ? (newCoord.x = limits.right) : false ||
-      // (currentX > limits.left) ? (newCoord.x = currentX) : false;
-
-      // newCoord.y = (currentY > limits.bottom) ? (newCoord.y = limits.bottom) : false ||
-      // (currentY > limits.top) ? (newCoord.y = currentY) : false;
-
       startPin.setAttribute('style', 'left: ' + newCoord.x + 'px; ' + 'top: ' + newCoord.y + 'px;');
 
       window.advert.formAdressInput.value = currentX + Math.ceil(window.pin.WIDTH / 2) + ', ' + (currentY + window.pin.HEIGHT);
