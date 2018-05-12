@@ -3,7 +3,7 @@
 window.pin = (function () {
   var HEIGHT = 87;
   var WIDTH = 65;
-  var MAX_PINS = 5;
+  var DISPLAY_LIMIT = 5;
   var mapFiltersForm = document.querySelector('.map__filters');
   var mapFiltersFormFieldSet = mapFiltersForm.getElementsByTagName('fieldset');
   var mapFiltersFormSelects = mapFiltersForm.getElementsByTagName('select');
@@ -61,7 +61,7 @@ window.pin = (function () {
 
   return {
     getData: function (offersArray) {
-      var lengthLimit = (offersArray.length > MAX_PINS) ? MAX_PINS : offersArray.length;
+      var lengthLimit = (offersArray.length > DISPLAY_LIMIT) ? DISPLAY_LIMIT : offersArray.length;
       for (var i = 0; i < lengthLimit; i++) {
         var newPin = mapPin.cloneNode(true);
         newPin.setAttribute('style', 'left: ' + (offersArray[i].location.x - Math.ceil(WIDTH / 2)) + 'px; ' + 'top: ' + (offersArray[i].location.y - HEIGHT) + 'px;');
